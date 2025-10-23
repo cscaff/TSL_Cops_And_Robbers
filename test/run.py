@@ -7,6 +7,9 @@ import subprocess
 # REGEX
 import re
 
+# Transformer
+from game.transformer import transformer
+
 def synthesize(spec: str):
     # Connect paths
     current_dir = os.path.dirname(__file__)
@@ -51,9 +54,12 @@ def inject(code: str):
         text
     )
 
+    # Add trace logging
+    output = transformer(new_text)
+
     # Write Back
     with open(target_path, "w") as f:
-        f.write(new_text) 
+        f.write(output) 
     
     print(f"Done!\n ------- Injected updateState into {target_path}\n-------")
 
@@ -80,6 +86,7 @@ def clean():
     print(f"Done!\n ------- Removed Synthesized Code {target_path}\n-------")
 
 def run():
+    
     subprocess.run(["python3", "./game/game.py"])
 
 if __name__ == '__main__':
