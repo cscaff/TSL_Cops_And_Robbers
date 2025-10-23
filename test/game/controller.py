@@ -2,13 +2,20 @@
 from datetime import datetime
 from operator import itemgetter
 from entities import Robber, Cop, _next_Cop
+from logger import natural_log
 
 def log_condition(cond_str, current_state, actions):
     print(f"- - - - - - - - - - - - - - - - -")
-    print(f"t = {datetime.now().strftime("%H:%M:%S")}")
-    print(f"[TRACE] Current State = {current_state}")
-    print(f"[TRACE] Chosen Next Event Condition: {cond_str}")
-    print(f"[TRACE]   Actions to Perform: [{'\n'.join(actions)}]")
+    # print(f"t = {datetime.now().strftime("%H:%M:%S")}")
+    # print(f"[TRACE] Current State = {current_state}")
+    # print(f"[TRACE] Chosen Next Event Condition: {cond_str}")
+    # print(f"[TRACE]   Actions to Perform: [{'\n'.join(actions)}]")
+
+    formal_log = f""" Current time = {datetime.now().strftime("%H:%M:%S")}. I am in state {current_state}. The next event I chose is because I
+    am in this condition: {cond_str}. Because I meet this condition, I will perform the following list of actions: [{'\n'.join(actions)}].
+    """
+
+    natural_log(formal_log)
 
 def updateState(_inputs_and_cells):
     currentState, Robber.x, Robber.y, Cop.x, Cop.y = itemgetter('currentState',
