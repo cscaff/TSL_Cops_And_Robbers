@@ -85,6 +85,21 @@ def clean():
 
     print(f"Done!\n ------- Removed Synthesized Code {target_path}\n-------")
 
+def trace_inject():
+    # Output file
+    new_text = ""
+    # Read target file
+    BASE_DIR = os.path.dirname(__file__)
+    target_path = os.path.join(BASE_DIR, "game", "controller.py")
+    with open(target_path, "r") as f:
+        text = f.read()
+        new_text = transformer(text)
+
+    # Write Back
+    with open(target_path, "w") as f:
+        f.write(new_text) 
+    
+
 def run():
     
     subprocess.run(["python3", "./game/game.py"])
@@ -94,7 +109,8 @@ if __name__ == '__main__':
     # code = synthesize("spec.tslmt")
     # # Inject
     # inject(code)
-    # Run
-    run()
+    trace_inject()
+    # # Run
+    # run()
     # Clean
     # clean()
