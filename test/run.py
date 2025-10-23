@@ -37,7 +37,7 @@ def synthesize(spec: str):
 def inject(code: str):
     # Read the target file
     BASE_DIR = os.path.dirname(__file__)
-    target_path = os.path.join(BASE_DIR, "game", "game.py")
+    target_path = os.path.join(BASE_DIR, "game", "controller.py")
     with open(target_path, "r") as f:
         text = f.read()
 
@@ -60,7 +60,7 @@ def inject(code: str):
 def clean():
     # Read target file
     BASE_DIR = os.path.dirname(__file__)
-    target_path = os.path.join(BASE_DIR, "game", "game.py")
+    target_path = os.path.join(BASE_DIR, "game", "controller.py")
     with open(target_path, "r") as f:
         text = f.read()
 
@@ -90,4 +90,4 @@ if __name__ == '__main__':
     # Run
     run()
     # Clean
-    clean()
+    # clean()
