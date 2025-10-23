@@ -1,6 +1,6 @@
 # Securing Path
 import os
-
+    
 # TSL Command
 import subprocess
 
@@ -80,7 +80,6 @@ def trace_inject():
     
 
 def run():
-    
     subprocess.run(["python3", "./game/game.py"])
 
 if __name__ == '__main__':

@@ -2,7 +2,7 @@
 from datetime import datetime
 from operator import itemgetter
 from entities import Robber, Cop, _next_Cop
-from logger import natural_log
+from logger import trace_to_natural_language
 
 def log_condition(cond_str, current_state, actions):
     print(f"- - - - - - - - - - - - - - - - -")
@@ -15,7 +15,7 @@ def log_condition(cond_str, current_state, actions):
     am in this condition: {cond_str}. Because I meet this condition, I will perform the following list of actions: [{'\n'.join(actions)}].
     """
 
-    natural_log(formal_log)
+    trace_to_natural_language(formal_log)
 
 def updateState(_inputs_and_cells):
     currentState, Robber.x, Robber.y, Cop.x, Cop.y = itemgetter('currentState',
