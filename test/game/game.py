@@ -199,10 +199,10 @@ class GridGame:
                   else:
                       # other game states if needed
                       self.draw_grid()
-          pygame.time.delay(10)
+        #   pygame.time.delay(1000)
           self.draw_grid()
 
-        pygame.quit()
+        pygame.quit() 
 
 
 def main():

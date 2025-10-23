@@ -41,21 +41,9 @@ def inject(code: str):
     # Read the target file
     BASE_DIR = os.path.dirname(__file__)
     target_path = os.path.join(BASE_DIR, "game", "controller.py")
-    with open(target_path, "r") as f:
-        text = f.read()
-
-    # Replace the region between the markers
-    pattern = re.compile(
-        r"(# INJECT START\n).*?(# INJECT END)",
-        re.DOTALL
-    )
-    new_text = pattern.sub(
-        lambda m: f"{m.group(1)}{code}\n{m.group(2)}",
-        text
-    )
 
     # Add trace logging
-    output = transformer(new_text)
+    output = transformer(code)
 
     # Write Back
     with open(target_path, "w") as f:
@@ -70,18 +58,9 @@ def clean():
     with open(target_path, "r") as f:
         text = f.read()
 
-    pattern = re.compile(
-        r"(# INJECT START\n).*?(# INJECT END)",
-        re.DOTALL
-    )
-    new_text = pattern.sub(
-        lambda m: f"{m.group(1)}{""}\n{m.group(2)}",
-        text
-    )
-
     # Write Back
     with open(target_path, "w") as f:
-        f.write(new_text) 
+        f.write("") 
 
     print(f"Done!\n ------- Removed Synthesized Code {target_path}\n-------")
 
@@ -109,8 +88,7 @@ if __name__ == '__main__':
     # code = synthesize("spec.tslmt")
     # # Inject
     # inject(code)
-    trace_inject()
-    # # Run
-    # run()
+    # Run
+    run()
     # Clean
     # clean()
