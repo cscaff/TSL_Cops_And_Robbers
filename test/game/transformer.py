@@ -50,4 +50,17 @@ def transformer(code_str):
     tree = ast.parse(code_str)
     tree = TraceInjector().visit(tree)
     ast.fix_missing_locations(tree)
-    return astor.to_source(tree)
+    source = astor.to_source(tree)
+
+    # Dependencies:
+    dep = """
+from operator import itemgetter
+from entities import Robber, Cop, _next_Cop
+
+def log_condition(cond_str):
+    print(f"[TRACE] Evaluating condition: {cond_str}")\n
+"""
+
+    source = dep + source
+
+    return source
