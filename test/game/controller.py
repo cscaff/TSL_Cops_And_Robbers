@@ -1,5 +1,5 @@
 from operator import itemgetter
-from game import Robber, Cop, _next_Cop
+from entities import Robber, Cop, _next_Cop
 
 # INJECT START
 def updateState(_inputs_and_cells):
