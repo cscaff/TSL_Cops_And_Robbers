@@ -1,10 +1,9 @@
 from openai import OpenAI
 import os
 
-OpenAI.api_key = os.getenv("OPENAI_API_KEY")
-
-
 def natural_log(formal_log: str):
+    OpenAI.api_key = os.getenv("OPENAI_API_KEY")
+    
     response = client.responses.create(
         model="gpt-4",
         messages=[
