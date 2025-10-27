@@ -6,10 +6,14 @@ initially assume {
 
 // Assumptions on the Input Signals
 always assume {
-  // Robber Position
+  // Grid Parameters
+  (MinX() < MaxX());
+  (MinY() < MaxY());
+
+  // Robber Movement
   (Robber.x = 1 && Robber.y = 1);
 
-  // Movement
+  // Cop Movement
   ! (Cop.x < Robber.x && Cop.x > Robber.x);
   ! (Cop.y < Robber.y && Cop.y > Robber.y);
 }
