@@ -27,6 +27,12 @@ always assume {
 
 // System Guarantees: Output Signals: Cop Behavior
 always guarantee {
+  // Boundary Reaction
+  [Cop.x <- MaxX()] -> [Cop.x <- Cop.moveL(Cop.x)];
+  [Cop.x <- MinX()] -> [Cop.x <- Cop.moveR(Cop.x)];
+  [Cop.y <- MaxY()] -> [Cop.y <- Cop.moveU(Cop.x)];
+  [Cop.y <- MinY()] -> [Cop.y <- Cop.moveD(Cop.x)];
+
   // Cop Movement
   (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
   (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];

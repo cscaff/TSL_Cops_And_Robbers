@@ -49,6 +49,76 @@ def updateState(_inputs_and_cells):
                 """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
     Robber.x)"""
                 , currentState,
+                ['_next_Cop.y=Cop.moveD(Cop.x)', '_next_Cop.x=Cop.x', 'currentState=(0)']
+                )
+            _next_Cop.y = Cop.moveD(Cop.x)
+            _next_Cop.x = Cop.x
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.y=Cop.moveU(Cop.x)', '_next_Cop.x=Cop.x', 'currentState=(0)']
+                )
+            _next_Cop.y = Cop.moveU(Cop.x)
+            _next_Cop.x = Cop.x
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.y', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveR(Cop.x)
+            _next_Cop.y = Cop.y
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.y)', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveR(Cop.x)
+            _next_Cop.y = Cop.moveD(Cop.y)
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.y)', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveR(Cop.x)
+            _next_Cop.y = Cop.moveU(Cop.y)
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.x)', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveR(Cop.x)
+            _next_Cop.y = Cop.moveD(Cop.x)
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.x)', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveR(Cop.x)
+            _next_Cop.y = Cop.moveU(Cop.x)
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
+    Robber.x)"""
+                , currentState,
                 ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.y', 'currentState=(0)']
                 )
             _next_Cop.x = Cop.moveL(Cop.x)
@@ -79,30 +149,20 @@ def updateState(_inputs_and_cells):
                 """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
     Robber.x)"""
                 , currentState,
-                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.y', 'currentState=(0)']
+                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.x)', 'currentState=(0)']
                 )
-            _next_Cop.x = Cop.moveR(Cop.x)
-            _next_Cop.y = Cop.y
+            _next_Cop.x = Cop.moveL(Cop.x)
+            _next_Cop.y = Cop.moveD(Cop.x)
             currentState = 0
         elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
             log_condition(
                 """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
     Robber.x)"""
                 , currentState,
-                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.y)', 'currentState=(0)']
+                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.x)', 'currentState=(0)']
                 )
-            _next_Cop.x = Cop.moveR(Cop.x)
-            _next_Cop.y = Cop.moveD(Cop.y)
-            currentState = 0
-        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
-            log_condition(
-                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
-    Robber.x)"""
-                , currentState,
-                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.y)', 'currentState=(0)']
-                )
-            _next_Cop.x = Cop.moveR(Cop.x)
-            _next_Cop.y = Cop.moveU(Cop.y)
+            _next_Cop.x = Cop.moveL(Cop.x)
+            _next_Cop.y = Cop.moveU(Cop.x)
             currentState = 0
         elif Cop.x < Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
             log_condition(
@@ -133,6 +193,76 @@ def updateState(_inputs_and_cells):
                 )
             _next_Cop.x = Cop.moveR(Cop.x)
             _next_Cop.y = Cop.moveU(Cop.y)
+            currentState = 0
+        elif Cop.x < Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
+            log_condition(
+                """(Cop.x < Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.x)', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveR(Cop.x)
+            _next_Cop.y = Cop.moveD(Cop.x)
+            currentState = 0
+        elif Cop.x < Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
+            log_condition(
+                """(Cop.x < Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x <=
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.x)', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveR(Cop.x)
+            _next_Cop.y = Cop.moveU(Cop.x)
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x > Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x >
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.y', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveL(Cop.x)
+            _next_Cop.y = Cop.y
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x > Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x >
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.y)', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveL(Cop.x)
+            _next_Cop.y = Cop.moveD(Cop.y)
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x > Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x >
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.y)', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveL(Cop.x)
+            _next_Cop.y = Cop.moveU(Cop.y)
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x > Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x >
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.x)', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveL(Cop.x)
+            _next_Cop.y = Cop.moveD(Cop.x)
+            currentState = 0
+        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x > Robber.x:
+            log_condition(
+                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x >
+    Robber.x)"""
+                , currentState,
+                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.x)', 'currentState=(0)']
+                )
+            _next_Cop.x = Cop.moveL(Cop.x)
+            _next_Cop.y = Cop.moveU(Cop.x)
             currentState = 0
         elif Cop.x >= Robber.x and Cop.y > Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
             log_condition(
@@ -149,9 +279,9 @@ def updateState(_inputs_and_cells):
                 """(Cop.x >= Robber.x and Cop.y > Robber.y and Cop.y >= Robber.y and Cop.x <=
     Robber.x)"""
                 , currentState,
-                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.y)', 'currentState=(0)']
+                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.y)', 'currentState=(0)']
                 )
-            _next_Cop.x = Cop.moveL(Cop.x)
+            _next_Cop.x = Cop.moveR(Cop.x)
             _next_Cop.y = Cop.moveU(Cop.y)
             currentState = 0
         elif Cop.x >= Robber.x and Cop.y > Robber.y and Cop.y >= Robber.y and Cop.x <= Robber.x:
@@ -159,9 +289,9 @@ def updateState(_inputs_and_cells):
                 """(Cop.x >= Robber.x and Cop.y > Robber.y and Cop.y >= Robber.y and Cop.x <=
     Robber.x)"""
                 , currentState,
-                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.y)', 'currentState=(0)']
+                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.y)', 'currentState=(0)']
                 )
-            _next_Cop.x = Cop.moveR(Cop.x)
+            _next_Cop.x = Cop.moveL(Cop.x)
             _next_Cop.y = Cop.moveU(Cop.y)
             currentState = 0
         elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y < Robber.y and Cop.x <= Robber.x:
@@ -179,9 +309,9 @@ def updateState(_inputs_and_cells):
                 """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y < Robber.y and Cop.x <=
     Robber.x)"""
                 , currentState,
-                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.y)', 'currentState=(0)']
+                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.y)', 'currentState=(0)']
                 )
-            _next_Cop.x = Cop.moveL(Cop.x)
+            _next_Cop.x = Cop.moveR(Cop.x)
             _next_Cop.y = Cop.moveD(Cop.y)
             currentState = 0
         elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y < Robber.y and Cop.x <= Robber.x:
@@ -189,40 +319,10 @@ def updateState(_inputs_and_cells):
                 """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y < Robber.y and Cop.x <=
     Robber.x)"""
                 , currentState,
-                ['_next_Cop.x=Cop.moveR(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.y)', 'currentState=(0)']
-                )
-            _next_Cop.x = Cop.moveR(Cop.x)
-            _next_Cop.y = Cop.moveD(Cop.y)
-            currentState = 0
-        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x > Robber.x:
-            log_condition(
-                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x >
-    Robber.x)"""
-                , currentState,
-                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.y', 'currentState=(0)']
-                )
-            _next_Cop.x = Cop.moveL(Cop.x)
-            _next_Cop.y = Cop.y
-            currentState = 0
-        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x > Robber.x:
-            log_condition(
-                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x >
-    Robber.x)"""
-                , currentState,
                 ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveD(Cop.y)', 'currentState=(0)']
                 )
             _next_Cop.x = Cop.moveL(Cop.x)
             _next_Cop.y = Cop.moveD(Cop.y)
-            currentState = 0
-        elif Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x > Robber.x:
-            log_condition(
-                """(Cop.x >= Robber.x and Cop.y <= Robber.y and Cop.y >= Robber.y and Cop.x >
-    Robber.x)"""
-                , currentState,
-                ['_next_Cop.x=Cop.moveL(Cop.x)', '_next_Cop.y=Cop.moveU(Cop.y)', 'currentState=(0)']
-                )
-            _next_Cop.x = Cop.moveL(Cop.x)
-            _next_Cop.y = Cop.moveU(Cop.y)
             currentState = 0
         elif Cop.x < Robber.x and Cop.x > Robber.x:
             log_condition('(Cop.x < Robber.x and Cop.x > Robber.x)',
