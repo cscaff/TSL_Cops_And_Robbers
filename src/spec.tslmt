@@ -10,6 +10,13 @@ always assume {
   (MinX() < MaxX());
   (MinY() < MaxY());
 
+  // Cop and Robber must stay within Grid
+  (Cop.x <= MaxX()) && (Cop.x >= MinX());
+  (Cop.y <= MaxY()) && (Cop.y >= MinY());
+
+  (Robber.x <= MaxX()) && (Robber.x >= MinX());
+  (Robber.y <= MaxY()) && (Robber.y >= MinY());
+
   // Robber Movement
   (Robber.x = 1 && Robber.y = 1);
 
