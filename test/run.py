@@ -51,19 +51,6 @@ def inject(code: str):
     
     print(f"Done!\n ------- Injected updateState into {target_path}\n-------")
 
-def clean():
-    # Read target file
-    BASE_DIR = os.path.dirname(__file__)
-    target_path = os.path.join(BASE_DIR, "game", "controller.py")
-    with open(target_path, "r") as f:
-        text = f.read()
-
-    # Write Back
-    with open(target_path, "w") as f:
-        f.write("") 
-
-    print(f"Done!\n ------- Removed Synthesized Code {target_path}\n-------")
-
 def trace_inject():
     # Output file
     new_text = ""
@@ -89,5 +76,3 @@ if __name__ == '__main__':
     inject(code)
     # Run
     run()
-    # Clean
-    # clean()
