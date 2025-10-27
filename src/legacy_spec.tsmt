@@ -1,0 +1,24 @@
+#LIA  
+//This is a test file for Cops and Robbers Positioning System Only.
+
+initially assume {
+}
+
+// Assumptions on the Input Signals
+always assume {
+  // Robber Position
+  (Robber.x = 1 && Robber.y = 1);
+
+  // Movement
+  ! (Cop.x < Robber.x && Cop.x > Robber.x);
+  ! (Cop.y < Robber.y && Cop.y > Robber.y);
+}
+
+// System Guarantees: Output Signals: Cop Behavior
+always guarantee {
+  // Cop Movement
+  (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
+  (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
+  (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
+  (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
+}
