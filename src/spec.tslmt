@@ -2,81 +2,23 @@
 //This is a test file for Cops and Robbers Positioning System Only.
 
 initially assume {
-  // Initial State Input:
-  // Cop and Robber must be separated at start
-  ! ((Cop.x = Robber.x) && (Cop.y = Robber.y));
 }
 
 // Assumptions on the Input Signals
 always assume {
-  // Grid Input Assumptions
-  (MinX() < MaxX());
-  (MinY() < MaxY());
+  // Robber Position
+  (Robber.x = 1 && Robber.y = 1);
 
-  // Cop Input Assumptions
-
-  // Cop must be within bounds
-  (Cop.x >= MinX()) && (Cop.x <= MaxX());
-  (Cop.y >= MinY()) && (Cop.y <= MaxY());
-
-  // Cop Cannot be at both min and max at same time
-  ! (Cop.x = MinX() && Cop.x = MaxX());
-  ! (Cop.y = MinY() && Cop.y = MaxY());
-
-  // Robber Input Assumptions
-
-  // Robber must be within bounds
-  (Robber.x >= MinX()) && (Robber.x <= MaxX());
-  (Robber.y >= MinY()) && (Robber.y <= MaxY());
-
-  // // Cop Must Move at each step
-  [Cop.x <- Cop.x + 1] || [Cop.x <- Cop.x - 1] || [Cop.x <- Cop.x];
-
-  [Cop.y <- Cop.y + 1] || [Cop.y <- Cop.y - 1] || [Cop.y <- Cop.y];
-
-  // ([Cop.x <- Cop.x] && ! ((Cop.x = Robber.x) && (Cop.y = Robber.y))) -> ([Cop.y <- Cop.y + 1] || [Cop.y <- Cop.y - 1]);
-  // ([Cop.y <- Cop.y] && ! ((Cop.x = Robber.x) && (Cop.y = Robber.y))) -> ([Cop.x <- Cop.x + 1] || [Cop.x <- Cop.x - 1]);
-
-
-  // Cop - Robber Mutual Exclusion: Convert to XOR. Building debugging software
-  
-  (
-  ((Cop.x < Robber.x) && !(Cop.x = Robber.x) && !(Cop.x > Robber.x))
-  ||
-  (!(Cop.x < Robber.x) && (Cop.x = Robber.x) && !(Cop.x > Robber.x))
-  ||
-  (!(Cop.x < Robber.x) && !(Cop.x = Robber.x) && (Cop.x > Robber.x))
-  );
-
-  (
-  ((Cop.y < Robber.y) && !(Cop.y = Robber.y) && !(Cop.y > Robber.y))
-  ||
-  (!(Cop.y < Robber.y) && (Cop.y = Robber.y) && !(Cop.y > Robber.y))
-  ||
-  (!(Cop.y < Robber.y) && !(Cop.y = Robber.y) && (Cop.y > Robber.y))
-  );
-
+  // Movement
+  ! (Cop.x < Robber.x && Cop.x > Robber.x);
+  ! (Cop.y < Robber.y && Cop.y > Robber.y);
 }
 
 // System Guarantees: Output Signals: Cop Behavior
 always guarantee {
-  // Cop Must eventually find the robber
-  F ( G ((Cop.x = Robber.x) && (Cop.y = Robber.y)));
-
-  // Progress towards robber
-  (((Cop.x < Robber.x) && (Cop.y = Robber.y)) -> (([Cop.x <- Cop.x + 1] && [Cop.y <- Cop.y]) U (Cop.x = Robber.x)));
-  (((Cop.x < Robber.x) && (Cop.y > Robber.y)) -> (([Cop.x <- Cop.x + 1] && [Cop.y <- Cop.y - 1]) U ((Cop.x = Robber.x) && (Cop.y = Robber.y))));
-  (((Cop.x < Robber.x) && (Cop.y < Robber.y)) -> (([Cop.x <- Cop.x + 1] && [Cop.y <- Cop.y + 1]) U ((Cop.x = Robber.x) && (Cop.y = Robber.y))));
-
-  (((Cop.x > Robber.x) && (Cop.y = Robber.y)) -> (([Cop.x <- Cop.x - 1] && [Cop.y <- Cop.y]) U (Cop.x = Robber.x)));
-  (((Cop.x > Robber.x) && (Cop.y > Robber.y)) -> (([Cop.x <- Cop.x - 1] && [Cop.y <- Cop.y - 1]) U ((Cop.x = Robber.x) && (Cop.y = Robber.y))));
-  (((Cop.x > Robber.x) && (Cop.y < Robber.y)) -> (([Cop.x <- Cop.x - 1] && [Cop.y <- Cop.y + 1]) U ((Cop.x = Robber.x) && (Cop.y = Robber.y))));
-
-  (((Cop.x = Robber.x) && (Cop.y < Robber.y)) -> (([Cop.x <- Cop.x] && [Cop.y <- Cop.y + 1]) U ((Cop.y = Robber.y))));
-  (((Cop.x = Robber.x) && (Cop.y > Robber.y)) -> (([Cop.x <- Cop.x] && [Cop.y <- Cop.y - 1]) U ((Cop.y = Robber.y))));
-  (((Cop.x = Robber.x) && (Cop.y = Robber.y)) -> (([Cop.x <- Cop.x] && [Cop.y <- Cop.y])));
-
-  // No stalling
-  ([Cop.x <- Cop.x] && [Cop.y <- Cop.y] && ! ((Cop.x = Robber.x) && (Cop.y = Robber.y))) -> X ([Cop.x <- Cop.x + 1] || [Cop.x <- Cop.x - 1] || [Cop.y <- Cop.y + 1] || [Cop.y <- Cop.y - 1]);
-
+  // Cop Movement
+  (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
+  (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
+  (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
+  (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
 }

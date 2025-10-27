@@ -83,10 +83,10 @@ def run():
     subprocess.run(["python3", "./game/game.py"])
 
 if __name__ == '__main__':
-    # # Synth
-    # code = synthesize("spec.tslmt")
-    # # Inject
-    # inject(code)
+    # Synth
+    code = synthesize("spec.tslmt")
+    # Inject
+    inject(code)
     # Run
     run()
     # Clean
