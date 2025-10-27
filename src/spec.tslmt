@@ -39,9 +39,9 @@ always guarantee {
   (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
   (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
 
-  // Robber Boundary Reaction
-  [Robber.x <- MaxX()] -> [Robber.x <- Robber.moveL(Cop.x)];
-  [Robber.x <- MinX()] -> [Robber.x <- Robber.moveR(Cop.x)];
-  [Robber.y <- MaxY()] -> [Robber.y <- Robber.moveU(Cop.x)];
-  [Robber.y <- MinY()] -> [Robber.y <- Robber.moveD(Cop.x)];
 }
+
+// Notes, Robber should be controlled by the Enviro. Not System.
+// Robber could take control inputs.
+// System must guarantee a win against the Robber despite whatever input.
+// Could be tested with Reinforcement Learning.
