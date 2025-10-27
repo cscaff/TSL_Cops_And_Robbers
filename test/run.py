@@ -1,5 +1,6 @@
 # Securing Path
 import os
+import sys
     
 # TSL Command
 import subprocess
@@ -9,6 +10,7 @@ import re
 
 # Transformer
 from game.transformer import transformer
+
 
 def synthesize(spec: str):
     # Connect paths
@@ -37,6 +39,7 @@ def synthesize(spec: str):
 
     return generated_code
 
+
 def inject(code: str):
     # Read the target file
     BASE_DIR = os.path.dirname(__file__)
@@ -50,6 +53,7 @@ def inject(code: str):
         f.write(output) 
     
     print(f"Done!\n ------- Injected updateState into {target_path}\n-------")
+
 
 def trace_inject():
     # Output file
@@ -69,10 +73,19 @@ def trace_inject():
 def run():
     subprocess.run(["python3", "./game/game.py"])
 
+
+def main(arguments):
+    if len(arguments) > 1 and arguments[1] == "-S":
+        # Synth
+        code = synthesize("spec.tslmt")
+        # Inject
+        inject(code)
+        # Run
+        run()
+    else:
+        # Run
+        run()
+
+
 if __name__ == '__main__':
-    # Synth
-    code = synthesize("spec.tslmt")
-    # Inject
-    inject(code)
-    # Run
-    run()
+    main(sys.argv)
