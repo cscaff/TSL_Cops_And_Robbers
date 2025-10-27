@@ -25,17 +25,21 @@ class Robber:
         self.x = x
         self.y = y
 
-    def moveL(x):
-        return x - 1
+    def moveL(self):
+        x = self.x - 1
+        return x
     
     def moveR(x):
-        return x + 1
+        x = x + 1
+        return x
     
     def moveU(y):
-        return y - 1
+        y = y - 1
+        return y
     
     def moveD(y):
-        return y + 1
+        y = y + 1
+        return y
 
 class _next_Robber:
     def __init__(self, x, y):

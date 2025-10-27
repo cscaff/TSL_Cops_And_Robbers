@@ -17,6 +17,9 @@ always assume {
   (Robber.x <= MaxX()) && (Robber.x >= MinX());
   (Robber.y <= MaxY()) && (Robber.y >= MinY());
 
+  // Robber Movement
+  ! (Robber.moveL())
+
   // Cop Movement
   ! (Cop.x < Robber.x && Cop.x > Robber.x);
   ! (Cop.y < Robber.y && Cop.y > Robber.y);
