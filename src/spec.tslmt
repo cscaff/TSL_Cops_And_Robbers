@@ -41,16 +41,16 @@ always guarantee {
   [Cop.y <- MinY()] -> [Cop.y <- Cop.moveD(Cop.x)];
 
   // Cop Movement
-  (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
-  (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
-  (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
-  (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
+  // (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
+  // (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
+  // (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
+  // (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
 
-  // ! (Cop.x = Robber.x) -> (X ([Cop.x <- Cop.moveR(Cop.x)]) || X ([Cop.x <- Cop.moveL(Cop.x)]));
-  // ! (Cop.y = Robber.y) -> (X ([Cop.y <- Cop.moveU(Cop.y)]) || X ([Cop.y <- Cop.moveD(Cop.y)]));
+ (! (Cop.x = Robber.x)) -> (X (Cop.x = Cop.moveR(Cop.x)) || X (Cop.x = Cop.moveL(Cop.x)));
+ (! (Cop.y = Robber.y)) -> (X (Cop.y = Cop.moveU(Cop.y)) || X (Cop.y = Cop.moveD(Cop.y)));
 
   // // Winning Condition
-  // F (Cop.x = Robber.x && Cop.y = Robber.y);
+  F (Cop.x = Robber.x && Cop.y = Robber.y);
 
 }
 
