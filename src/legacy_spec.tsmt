@@ -6,16 +6,34 @@ initially assume {
 
 // Assumptions on the Input Signals
 always assume {
-  // Robber Position
-  (Robber.x = 1 && Robber.y = 1);
+  // Grid Parameters
+  (MinX() < MaxX());
+  (MinY() < MaxY());
 
-  // Movement
+  // Cop and Robber must stay within Grid
+  (Cop.x <= MaxX()) && (Cop.x >= MinX());
+  (Cop.y <= MaxY()) && (Cop.y >= MinY());
+
+  (Robber.x <= MaxX()) && (Robber.x >= MinX());
+  (Robber.y <= MaxY()) && (Robber.y >= MinY());
+
+  // Cop Movement
   ! (Cop.x < Robber.x && Cop.x > Robber.x);
   ! (Cop.y < Robber.y && Cop.y > Robber.y);
+
+  // Robber Movement
+  X (Robber.x = Robber.x + 1) || X (Robber.x = Robber.x - 1);
+  X (Robber.y = Robber.y + 1) || X (Robber.y = Robber.y - 1);
 }
 
 // System Guarantees: Output Signals: Cop Behavior
 always guarantee {
+  // Cop Boundary Reaction
+  [Cop.x <- MaxX()] -> [Cop.x <- Cop.moveL(Cop.x)];
+  [Cop.x <- MinX()] -> [Cop.x <- Cop.moveR(Cop.x)];
+  [Cop.y <- MaxY()] -> [Cop.y <- Cop.moveU(Cop.x)];
+  [Cop.y <- MinY()] -> [Cop.y <- Cop.moveD(Cop.x)];
+
   // Cop Movement
   (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
   (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];

@@ -21,6 +21,12 @@ always assume {
   ! (Cop.x < Robber.x && Cop.x > Robber.x);
   ! (Cop.y < Robber.y && Cop.y > Robber.y);
 
+  // Robber Boundary Reaction
+  (Robber.x = MaxX()) -> F (Robber.x = Robber.x - 1);
+  (Robber.x = MinX()) -> F (Robber.x = Robber.x + 1);
+  (Robber.y = MaxY()) -> F (Robber.y = Robber.y - 1);
+  (Robber.y = MinY()) -> F (Robber.y = Robber.y + 1);
+
   // Robber Movement
   X (Robber.x = Robber.x + 1) || X (Robber.x = Robber.x - 1);
   X (Robber.y = Robber.y + 1) || X (Robber.y = Robber.y - 1);
@@ -39,6 +45,12 @@ always guarantee {
   (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
   (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
   (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
+
+  // ! (Cop.x = Robber.x) -> (X ([Cop.x <- Cop.moveR(Cop.x)]) || X ([Cop.x <- Cop.moveL(Cop.x)]));
+  // ! (Cop.y = Robber.y) -> (X ([Cop.y <- Cop.moveU(Cop.y)]) || X ([Cop.y <- Cop.moveD(Cop.y)]));
+
+  // // Winning Condition
+  // F (Cop.x = Robber.x && Cop.y = Robber.y);
 
 }
 
