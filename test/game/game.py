@@ -100,6 +100,17 @@ class GridGame:
             self.cop_pos = cell  # now (x, y)
             self.game_state = "done"
             self.draw_grid()
+    
+    def move_robber(self, dx, dy):
+        rx, ry = self.robber_pos
+        new_x = rx + dx
+        new_y = ry + dy
+
+        # Ensure robber stays inside bounds
+        if 0 <= new_x < self.m and 0 <= new_y < self.n:
+            self.robber_pos = (new_x, new_y)
+            self.draw_grid()
+
 
     def animate_chase_step(self):
         # one step of the chase animation
@@ -123,7 +134,7 @@ class GridGame:
         self.animation_state = out["currentState"]
         self.animation_x = out["Cop.x"]
         self.animation_y = out["Cop.y"]
-        self.cop_pos = (self.animation_x, self.animation_y)      
+        self.cop_pos = (self.animation_x, self.animation_y)   
 
         # redraw after each step
         self.draw_grid()
@@ -188,17 +199,27 @@ class GridGame:
                   running = False
               elif evt.type == pygame.MOUSEBUTTONDOWN and evt.button == 1:
                   self.handle_click(evt.pos)
-              elif evt.type == pygame.KEYDOWN and evt.key == pygame.K_SPACE:
-                  if self.game_state == "done":
-                      if not animating:
-                          animating = True  # start animation
-                      else:
-                          still_animating = self.animate_chase_step()
-                          if not still_animating:
-                              running = False  # animation finished
-                  else:
-                      # other game states if needed
-                      self.draw_grid()
+              elif evt.type == pygame.KEYDOWN:
+                if evt.key == pygame.K_SPACE:
+                    if self.game_state == "done":
+                        if not animating:
+                            animating = True  # start animation
+                        else:
+                            still_animating = self.animate_chase_step()
+                            if not still_animating:
+                                running = False  # animation finished
+                    else:
+                        self.draw_grid()
+
+                # --- Robber Movement Controls ---
+                elif evt.key == pygame.K_w:  # move up
+                    self.move_robber(0, -1)
+                elif evt.key == pygame.K_s:  # move down
+                    self.move_robber(0, 1)
+                elif evt.key == pygame.K_a:  # move left
+                    self.move_robber(-1, 0)
+                elif evt.key == pygame.K_d:  # move right
+                    self.move_robber(1, 0)
         #   pygame.time.delay(1000)
           self.draw_grid()
 

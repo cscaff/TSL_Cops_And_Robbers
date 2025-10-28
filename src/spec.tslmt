@@ -17,12 +17,13 @@ always assume {
   (Robber.x <= MaxX()) && (Robber.x >= MinX());
   (Robber.y <= MaxY()) && (Robber.y >= MinY());
 
-  // Robber Movement
-  ! (Robber.moveL())
-
   // Cop Movement
   ! (Cop.x < Robber.x && Cop.x > Robber.x);
   ! (Cop.y < Robber.y && Cop.y > Robber.y);
+
+  // Robber Movement
+  X (Robber.x = Robber.x + 1) || X (Robber.x = Robber.x - 1);
+  X (Robber.y = Robber.y + 1) || X (Robber.y = Robber.y - 1);
 }
 
 // System Guarantees: Output Signals: Cop Behavior
@@ -45,3 +46,4 @@ always guarantee {
 // Robber could take control inputs.
 // System must guarantee a win against the Robber despite whatever input.
 // Could be tested with Reinforcement Learning.
+// Look at King's graph stuff.
