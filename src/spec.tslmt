@@ -40,17 +40,21 @@ always guarantee {
   [Cop.y <- MaxY()] -> [Cop.y <- Cop.moveU(Cop.x)];
   [Cop.y <- MinY()] -> [Cop.y <- Cop.moveD(Cop.x)];
 
-  // Cop Movement
+  // // Cop Movement
   // (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
   // (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
   // (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
   // (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
 
- (! (Cop.x = Robber.x)) -> (X (Cop.x = Cop.moveR(Cop.x)) || X (Cop.x = Cop.moveL(Cop.x)));
- (! (Cop.y = Robber.y)) -> (X (Cop.y = Cop.moveU(Cop.y)) || X (Cop.y = Cop.moveD(Cop.y)));
+  // Cop Movement: King Behavior
+  ! ([Cop.x <- MaxX()] || [Cop.x <- MinX()] || [Cop.y <- MaxY()] || [Cop.y <- MinY()]) -> 
+  ([Cop.x <- Cop.moveR(Cop.x)] || [Cop.x <- Cop.moveL(Cop.x)] || [Cop.y <- Cop.moveU(Cop.y)] || [Cop.y <- Cop.moveD(Cop.y)] || [Cop.x <- Cop.x] || [Cop.y <- Cop.y]);
+
+  ! ([Cop.x <- Cop.moveR(Cop.x)] && [Cop.x <- Cop.moveL(Cop.x)]);
+  ! ([Cop.y <- Cop.moveU(Cop.y)] && [Cop.y <- Cop.moveD(Cop.y)]);
 
   // // Winning Condition
-  F (Cop.x = Robber.x && Cop.y = Robber.y);
+  F ((Cop.x = Robber.x) && (Cop.y = Robber.y));
 
 }
 
@@ -59,3 +63,5 @@ always guarantee {
 // System must guarantee a win against the Robber despite whatever input.
 // Could be tested with Reinforcement Learning.
 // Look at King's graph stuff.
+// https://en.wikipedia.org/wiki/Cop-win_graph
+// Overall Goal: Benchmarks for reactive synthesis. Show how it is useful. Illustrate how scaling cops and robbers can scale reactive synthesis difficulties.
