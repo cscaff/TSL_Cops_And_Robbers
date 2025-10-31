@@ -1,0 +1,12 @@
+assume {
+  (G (((lte Robber.x) MaxX()) && ((gte Robber.x) MinX())));
+  (G (! (((lt Cop.x) Robber.x) && ((gt Cop.x) Robber.x))));
+  (G (((eq Robber.x) MaxX()) -> (F ((eq Robber.x) ((sub Robber.x) int1())))));
+  (G (((eq Robber.x) MinX()) -> (F ((eq Robber.x) ((add Robber.x) int1())))));
+  (G (X ((((eq Robber.x) (Robber.moveR Robber.x)) || ((eq Robber.x) (Robber.moveL Robber.x))) || ((eq Robber.x) Robber.x))));
+}
+
+guarantee {
+  (G (((eq Cop.x) MaxX()) -> (F [Cop.x <- (Cop.moveL Cop.x)])));
+  (true);
+}

@@ -39,7 +39,7 @@ class GridGame:
         self.font = pygame.font.SysFont(None, 24)
 
         # Robber Position (fixed for now)
-        self.robber_pos = (1, 1)
+        self.robber_pos = None
 
         # Current Turn
         self.turn = "robber"
@@ -90,7 +90,12 @@ class GridGame:
                 pygame.draw.rect(self.screen, self.BLUE, rect)
 
         # status text
-        status = "Click to place the cop" if self.game_state == "placing_cop" else "Animating..."
+        if self.game_state == "placing_cop":
+            status = "Click to place the cop"
+        elif self.game_state == "placing_robber":
+            status = "Click to place the robber"
+        else:
+            status = "Animating..."
         text_surf = self.font.render(status, True, self.BLUE)
         self.screen.blit(text_surf, (10, 10))
 
@@ -110,9 +115,15 @@ class GridGame:
         cell = self.get_cell_from_pos(pos)
         if cell and self.game_state == "placing_cop":
             self.cop_pos = cell  # now (x, y)
-            self.game_state = "running"
             self.draw_grid()
-    
+            self.game_state = "placing_robber"
+        elif cell and self.game_state == "placing_robber":
+            self.robber_pos = cell  # now (x, y)
+            self.draw_grid()
+            self.game_state = "running"
+
+
+
     def move_robber(self, dx, dy):
         rx, ry = self.robber_pos
         new_x = rx + dx

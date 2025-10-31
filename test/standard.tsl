@@ -1,0 +1,30 @@
+initially assume {
+
+}
+
+always assume {
+(lt MinX() MaxX());
+(lt MinY() MaxY());
+((lte Robber.x MaxX()) && (gte Robber.x MinX()));
+((lte Robber.y MaxY()) && (gte Robber.y MinY()));
+(! ((lt Cop.x Robber.x) && (gt Cop.x Robber.x)));
+(! ((lt Cop.y Robber.y) && (gt Cop.y Robber.y)));
+((eq Robber.x MaxX()) -> (F (eq Robber.x (sub Robber.x int1()))));
+((eq Robber.x MinX()) -> (F (eq Robber.x (add Robber.x int1()))));
+((eq Robber.y MaxY()) -> (F (eq Robber.y (sub Robber.y int1()))));
+((eq Robber.y MinY()) -> (F (eq Robber.y (add Robber.y int1()))));
+(X (((eq Robber.x (Robber.moveR Robber.x)) || (eq Robber.x (Robber.moveL Robber.x))) || (eq Robber.x Robber.x)));
+(X (((eq Robber.y (Robber.moveU Robber.y)) || (eq Robber.y (Robber.moveD Robber.y))) || (eq Robber.y Robber.y)));
+
+}
+
+always guarantee {
+((eq Cop.x MaxX()) -> (F [Cop.x <- (Cop.moveL Cop.x)]));
+((eq Cop.x MinX()) -> (F [Cop.x <- (Cop.moveR Cop.x)]));
+((eq Cop.y MaxY()) -> (F [Cop.y <- (Cop.moveU Cop.y)]));
+((eq Cop.y MinY()) -> (F [Cop.y <- (Cop.moveD Cop.y)]));
+((! ((eq Cop.x Robber.x) && (eq Cop.y Robber.y))) -> ((((((((X (([Cop.x <- (Cop.moveR Cop.x)] || [Cop.x <- (Cop.moveL Cop.x)]) || [Cop.x <- Cop.x])) && (X (([Cop.y <- (Cop.moveU Cop.y)] || [Cop.y <- (Cop.moveD Cop.y)]) || [Cop.y <- Cop.y]))) && (X (! ([Cop.x <- (Cop.moveR Cop.x)] && [Cop.x <- (Cop.moveL Cop.x)])))) && (X (! ([Cop.x <- (Cop.moveR Cop.x)] && [Cop.x <- Cop.x])))) && (X (! ([Cop.x <- (Cop.moveL Cop.x)] && [Cop.x <- Cop.x])))) && (X (! ([Cop.y <- (Cop.moveU Cop.y)] && [Cop.y <- (Cop.moveD Cop.y)])))) && (X (! ([Cop.y <- (Cop.moveU Cop.y)] && [Cop.y <- Cop.y])))) && (X (! ([Cop.y <- (Cop.moveD Cop.y)] && [Cop.y <- Cop.y])))));
+(F ((eq Cop.x Robber.x) && (eq Cop.y Robber.y)));
+
+}
+
