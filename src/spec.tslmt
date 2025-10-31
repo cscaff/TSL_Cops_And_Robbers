@@ -28,30 +28,38 @@ always assume {
   (Robber.y = MinY()) -> F (Robber.y = Robber.y + 1);
 
   // Robber Movement
-  X (Robber.x = Robber.x + 1) || X (Robber.x = Robber.x - 1);
-  X (Robber.y = Robber.y + 1) || X (Robber.y = Robber.y - 1);
+  X (Robber.x = Robber.x + 1) || X (Robber.x = Robber.x - 1) || X (Robber.x = Robber.x);
+  X (Robber.y = Robber.y + 1) || X (Robber.y = Robber.y - 1) || X (Robber.y = Robber.y);
 }
 
 // System Guarantees: Output Signals: Cop Behavior
 always guarantee {
   // Cop Boundary Reaction
-  [Cop.x <- MaxX()] -> [Cop.x <- Cop.moveL(Cop.x)];
-  [Cop.x <- MinX()] -> [Cop.x <- Cop.moveR(Cop.x)];
-  [Cop.y <- MaxY()] -> [Cop.y <- Cop.moveU(Cop.x)];
-  [Cop.y <- MinY()] -> [Cop.y <- Cop.moveD(Cop.x)];
+  (Cop.x = MaxX()) -> F [Cop.x <- Cop.moveL(Cop.x)];
+  (Cop.x = MinX()) -> F [Cop.x <- Cop.moveR(Cop.x)];
+  (Cop.y = MaxY()) -> F [Cop.y <- Cop.moveU(Cop.y)];
+  (Cop.y = MinY()) -> F [Cop.y <- Cop.moveD(Cop.y)];
 
   // // Cop Movement
-  (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
-  (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
-  (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
-  (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
+  // (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
+  // (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
+  // (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
+  // (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
 
   // // Cop Movement: King Behavior
   // ! ([Cop.x <- MaxX()] || [Cop.x <- MinX()] || [Cop.y <- MaxY()] || [Cop.y <- MinY()]) -> 
   // ([Cop.x <- Cop.moveR(Cop.x)] || [Cop.x <- Cop.moveL(Cop.x)] || [Cop.y <- Cop.moveU(Cop.y)] || [Cop.y <- Cop.moveD(Cop.y)] || [Cop.x <- Cop.x] || [Cop.y <- Cop.y]);
 
-  // ! ([Cop.x <- Cop.moveR(Cop.x)] && [Cop.x <- Cop.moveL(Cop.x)]);
-  // ! ([Cop.y <- Cop.moveU(Cop.y)] && [Cop.y <- Cop.moveD(Cop.y)]);
+  // Cop King-Like Movement
+  X ([Cop.x <- Cop.moveR(Cop.x)]) || X ([Cop.x <- Cop.moveL(Cop.x)]) || X ([Cop.x <- Cop.x]);
+  X ([Cop.y <- Cop.moveU(Cop.y)]) || X ([Cop.y <- Cop.moveD(Cop.y)]) || X ([Cop.y <- Cop.y]);
+
+  ! (X [Cop.x <- Cop.moveR(Cop.x)] && X [Cop.x <- Cop.moveL(Cop.x)]);
+  ! (X [Cop.x <- Cop.moveR(Cop.x)] && X [Cop.x <- Cop.x]);
+  ! (X [Cop.x <- Cop.moveL(Cop.x)] && X [Cop.x <- Cop.x]);
+  ! (X [Cop.y <- Cop.moveU(Cop.y)] && X [Cop.y <- Cop.moveD(Cop.y)]);
+  ! (X [Cop.y <- Cop.moveU(Cop.y)] && X [Cop.y <- Cop.y]);
+  ! (X [Cop.y <- Cop.moveD(Cop.y)] && X [Cop.y <- Cop.y]);
 
   // // // Winning Condition
   // F ((Cop.x = Robber.x) && (Cop.y = Robber.y));
