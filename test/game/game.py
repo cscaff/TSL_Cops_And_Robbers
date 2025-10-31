@@ -166,19 +166,25 @@ class GridGame:
                 elif evt.type == pygame.MOUSEBUTTONDOWN and evt.button == 1:
                     self.handle_click(evt.pos)
                 elif evt.type == pygame.KEYDOWN:
-                    print("Running?")
                     if self.game_state == "running":
-                        # DEBUG
-                        print("Waiting for key input")
-                        # Robber turn controls
-                        if evt.key == pygame.K_w:
-                            self.move_robber(0, -1)
-                        elif evt.key == pygame.K_s:
-                            self.move_robber(0, 1)
-                        elif evt.key == pygame.K_a:
-                            self.move_robber(-1, 0)
-                        elif evt.key == pygame.K_d:
-                            self.move_robber(1, 0)
+                        dx = dy = 0
+
+                        keys = pygame.key.get_pressed()
+
+                        # Vertical
+                        if keys[pygame.K_w]:
+                            dy -= 1
+                        elif keys[pygame.K_s]:
+                            dy += 1
+
+                        # Horizontal
+                        if keys[pygame.K_a]:
+                            dx -= 1
+                        elif keys[pygame.K_d]:
+                            dx += 1
+
+                        # Move if any direction pressed
+                        self.move_robber(dx, dy)
 
                         # Cop moves after robber finishes
                         if self.turn == "cop":
