@@ -25,6 +25,7 @@ class GridGame:
         self.WHITE = (255, 255, 255)
         self.BLUE = (0, 0, 255)
         self.GRAY = (200, 200, 200)
+        self.RED = (255, 0, 0)
 
         # screen setup
         self.width = self.m * self.cell_size + 100
@@ -38,7 +39,14 @@ class GridGame:
         self.font = pygame.font.SysFont(None, 24)
 
         # Robber Position (fixed for now)
-        self.robber_pos = (1, 1)  # fixed for now
+        self.robber_pos = (1, 1)
+
+        # Current Turn
+        self.turn = "robber"
+
+        # Animation State
+        self.animation_state = 0
+
 
     def draw_grid(self):
         # clear background
@@ -64,18 +72,22 @@ class GridGame:
                 self.cell_size - self.padding,
                 self.cell_size - self.padding
             )
+
             pygame.draw.rect(self.screen, self.BLUE, rect)
-
-        # draw the robber
-        rx, ry = self.robber_pos
-        rect = pygame.Rect(
-            rx * self.cell_size + 50,
-            ry * self.cell_size + 50,
-            self.cell_size - self.padding,
-            self.cell_size - self.padding
-        )
-        pygame.draw.rect(self.screen, (255, 0, 0), rect)  # red square
-
+        
+        if self.robber_pos:
+            rx, ry = self.robber_pos
+            rect = pygame.Rect(
+                rx * self.cell_size + 50,
+                ry * self.cell_size + 50,
+                self.cell_size - self.padding,
+                self.cell_size - self.padding
+            )
+            
+            if self.game_state != "capture":
+                pygame.draw.rect(self.screen, self.RED, rect)
+            else:
+                pygame.draw.rect(self.screen, self.BLUE, rect)
 
         # status text
         status = "Click to place the cop" if self.game_state == "placing_cop" else "Animating..."
@@ -98,7 +110,7 @@ class GridGame:
         cell = self.get_cell_from_pos(pos)
         if cell and self.game_state == "placing_cop":
             self.cop_pos = cell  # now (x, y)
-            self.game_state = "done"
+            self.game_state = "running"
             self.draw_grid()
     
     def move_robber(self, dx, dy):
@@ -109,122 +121,74 @@ class GridGame:
         # Ensure robber stays inside bounds
         if 0 <= new_x < self.m and 0 <= new_y < self.n:
             self.robber_pos = (new_x, new_y)
+            self.turn = "cop"
             self.draw_grid()
+            self.check_game_end()
 
-
-    def animate_chase_step(self):
-        # one step of the chase animation
-        if not hasattr(self, 'animation_state'):
-            self.animation_state = 0
-            self.animation_x, self.animation_y = self.cop_pos
-            self.animation_counter = 0
-
-        if self.animation_counter >= 200:
-            # finished animation
-            return False
-
-        # compute next position
+    def cop_move(self):
+        if not self.cop_pos:
+            return
+        
         out = updateState({
             "currentState": self.animation_state,
-            "Cop.x": self.animation_x,
-            "Cop.y": self.animation_y,
+            "Cop.x": self.cop_pos[0],
+            "Cop.y": self.cop_pos[1],
             "Robber.x": self.robber_pos[0],
             "Robber.y": self.robber_pos[1]
         })
+
         self.animation_state = out["currentState"]
-        self.animation_x = out["Cop.x"]
-        self.animation_y = out["Cop.y"]
-        self.cop_pos = (self.animation_x, self.animation_y)   
-
-        # redraw after each step
+        self.cop_pos = (out["Cop.x"], out["Cop.y"])
+        self.turn = "robber"
         self.draw_grid()
+        self.check_game_end()
 
-        # render text
-        state_text = self.font.render(f"State: {self.animation_state}", True, (0, 0, 0))
-        x_text = self.font.render(f"X: {self.animation_x}", True, (0, 0, 0))
-        y_text = self.font.render(f"Y: {self.animation_y}", True, (0, 0, 0))
-
-        # blit text to screen (positioned next to grid)
-        self.screen.blit(state_text, (10, self.height - 70))
-        self.screen.blit(x_text, (10, self.height - 50))
-        self.screen.blit(y_text, (10, self.height - 30))
-
-        # update display
-        pygame.display.flip()
-
-         # check if cop caught the robber
+    def check_game_end(self):
         if self.cop_pos == self.robber_pos:
-            # draw the cop square again on top of the robber
-            rx, ry = self.robber_pos
-            rect = pygame.Rect(
-                rx * self.cell_size + 50,
-                ry * self.cell_size + 50,
-                self.cell_size - self.padding,
-                self.cell_size - self.padding
-            )
-            pygame.draw.rect(self.screen, self.BLUE, rect)  # blue on top of red
-
-            # display win message
-            win_text = self.font.render("Cop caught the robber! You win!", True, (0, 128, 0))
+            self.game_state = "capture"
+            self.draw_grid()
+            win_text = self.font.render("Cop caught the robber! Game over!", True, (0, 128, 0))
             self.screen.blit(win_text, (50, 10))
             pygame.display.flip()
-            time.sleep(2)  # pause so user can see message
-            return False  # stop animation
+            time.sleep(2)
+            pygame.quit()
+            exit()
 
-        self.animation_counter += 1
-        return True
 
     def run(self):
         running = True
-        animating = False
+        self.draw_grid()
 
         while running:
-            # inside the while running loop
-          current_time = time.time()
-          if self.game_state == "done":
-              if not animating:
-                  animating = True
-                  self.animation_state = 0
-                  self.animation_x, self.animation_y = self.cop_pos
-                  self.animation_counter = 0
-                  self.last_step_time = current_time
-              else:
-                  if current_time - self.last_step_time >= self.step_interval:
-                      still_animating = self.animate_chase_step()
-                      self.last_step_time = current_time
-                      if not still_animating:
-                          running = False  # animation finished
-          for evt in pygame.event.get():
-              if evt.type == pygame.QUIT:
-                  running = False
-              elif evt.type == pygame.MOUSEBUTTONDOWN and evt.button == 1:
-                  self.handle_click(evt.pos)
-              elif evt.type == pygame.KEYDOWN:
-                if evt.key == pygame.K_SPACE:
-                    if self.game_state == "done":
-                        if not animating:
-                            animating = True  # start animation
-                        else:
-                            still_animating = self.animate_chase_step()
-                            if not still_animating:
-                                running = False  # animation finished
-                    else:
-                        self.draw_grid()
+            for evt in pygame.event.get():
+                if evt.type == pygame.QUIT:
+                    running = False
+                elif evt.type == pygame.MOUSEBUTTONDOWN and evt.button == 1:
+                    self.handle_click(evt.pos)
+                elif evt.type == pygame.KEYDOWN:
+                    print("Running?")
+                    if self.game_state == "running":
+                        # DEBUG
+                        print("Waiting for key input")
+                        # Robber turn controls
+                        if evt.key == pygame.K_w:
+                            self.move_robber(0, -1)
+                        elif evt.key == pygame.K_s:
+                            self.move_robber(0, 1)
+                        elif evt.key == pygame.K_a:
+                            self.move_robber(-1, 0)
+                        elif evt.key == pygame.K_d:
+                            self.move_robber(1, 0)
 
-                # --- Robber Movement Controls ---
-                elif evt.key == pygame.K_w:  # move up
-                    self.move_robber(0, -1)
-                elif evt.key == pygame.K_s:  # move down
-                    self.move_robber(0, 1)
-                elif evt.key == pygame.K_a:  # move left
-                    self.move_robber(-1, 0)
-                elif evt.key == pygame.K_d:  # move right
-                    self.move_robber(1, 0)
-        #   pygame.time.delay(1000)
-          self.draw_grid()
+                        # Cop moves after robber finishes
+                        if self.turn == "cop":
+                            self.cop_move()
 
-        pygame.quit() 
+            self.draw_grid()
 
+        pygame.quit()
+
+ 
 
 def main():
     try:

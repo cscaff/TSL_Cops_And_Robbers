@@ -41,20 +41,20 @@ always guarantee {
   [Cop.y <- MinY()] -> [Cop.y <- Cop.moveD(Cop.x)];
 
   // // Cop Movement
-  // (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
-  // (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
-  // (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
-  // (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
+  (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
+  (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
+  (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
+  (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
 
-  // Cop Movement: King Behavior
-  ! ([Cop.x <- MaxX()] || [Cop.x <- MinX()] || [Cop.y <- MaxY()] || [Cop.y <- MinY()]) -> 
-  ([Cop.x <- Cop.moveR(Cop.x)] || [Cop.x <- Cop.moveL(Cop.x)] || [Cop.y <- Cop.moveU(Cop.y)] || [Cop.y <- Cop.moveD(Cop.y)] || [Cop.x <- Cop.x] || [Cop.y <- Cop.y]);
+  // // Cop Movement: King Behavior
+  // ! ([Cop.x <- MaxX()] || [Cop.x <- MinX()] || [Cop.y <- MaxY()] || [Cop.y <- MinY()]) -> 
+  // ([Cop.x <- Cop.moveR(Cop.x)] || [Cop.x <- Cop.moveL(Cop.x)] || [Cop.y <- Cop.moveU(Cop.y)] || [Cop.y <- Cop.moveD(Cop.y)] || [Cop.x <- Cop.x] || [Cop.y <- Cop.y]);
 
-  ! ([Cop.x <- Cop.moveR(Cop.x)] && [Cop.x <- Cop.moveL(Cop.x)]);
-  ! ([Cop.y <- Cop.moveU(Cop.y)] && [Cop.y <- Cop.moveD(Cop.y)]);
+  // ! ([Cop.x <- Cop.moveR(Cop.x)] && [Cop.x <- Cop.moveL(Cop.x)]);
+  // ! ([Cop.y <- Cop.moveU(Cop.y)] && [Cop.y <- Cop.moveD(Cop.y)]);
 
-  // // Winning Condition
-  F ((Cop.x = Robber.x) && (Cop.y = Robber.y));
+  // // // Winning Condition
+  // F ((Cop.x = Robber.x) && (Cop.y = Robber.y));
 
 }
 
