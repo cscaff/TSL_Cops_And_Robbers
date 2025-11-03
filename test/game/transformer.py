@@ -73,7 +73,7 @@ def transformer(code_str):
     dep = """
 from datetime import datetime
 from operator import itemgetter
-from entities import Robber, Cop, _next_Cop
+from entities import Robber, Cop, _next_Cop, _next_Robber, MaxX, MaxY, MinX, MinY
 
 def log_condition(cond_str, current_state, actions):
     print(f"- - - - - - - - - - - - - - - - -")

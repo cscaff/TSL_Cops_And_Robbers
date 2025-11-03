@@ -2,14 +2,13 @@
 //This is a test file for Cops and Robbers Positioning System Only.
 
 initially assume {
-  Turn = robber;
 }
 
 // Assumptions on the Input Signals
 always assume {
   // Grid Parameters
   (MinX() < MaxX());
-  (MinY() < MaxY());
+  (MinY() < MaxY());  
 
   // Robber must stay within Grid
   (Robber.x <= MaxX()) && (Robber.x >= MinX());
@@ -19,56 +18,35 @@ always assume {
   ! (Cop.x < Robber.x && Cop.x > Robber.x);
   ! (Cop.y < Robber.y && Cop.y > Robber.y);
 
-  // Robber Boundary Reaction
-  (Robber.x = MaxX()) -> X ((Robber.x = Robber.x) || (Robber.x = Robber.x - 1));
-  (Robber.x = MinX()) -> X ((Robber.x = Robber.x) || (Robber.x = Robber.x + 1));
-  (Robber.y = MaxY()) -> X ((Robber.y = Robber.y) || (Robber.y = Robber.y - 1));
-  (Robber.y = MinY()) -> X ((Robber.y = Robber.y) || (Robber.y = Robber.y + 1));
+  // Robber Movements
+  (Robber.moveL || Robber.moveR || Robber.stayX) && (Robber.moveU || Robber.moveD || Robber.stayY);
+  (! (Robber.moveL && Robber.moveR) && ! (Robber.moveU && Robber.moveD));
+  (! (Robber.moveL && Robber.stayX) && ! (Robber.moveR && Robber.stayX));
+  (! (Robber.moveU && Robber.stayY) && ! (Robber.moveD && Robber.stayY));
 
-  // Robber King-Like Movement
-  (Turn = robber) -> (
-    X ((Robber.x = Robber.moveR(Robber.x)) || (Robber.x = Robber.moveL(Robber.x)) || (Robber.x = Robber.x)) &&
-    X ((Robber.y = Robber.moveU(Robber.y)) || (Robber.y = Robber.moveD(Robber.y)) || (Robber.y = Robber.y)) &&
-    X (Turn = cop)
-  );
+  Robber.moveL -> (Robber.x = Robber.x - 1);
+  Robber.moveR -> (Robber.x = Robber.x + 1);
+  Robber.moveU -> (Robber.y = Robber.y - 1);
+  Robber.moveD -> (Robber.y = Robber.y + 1);
+
+
+
+
 }
 
 // System Guarantees: Output Signals: Cop Behavior
 always guarantee {
   // Cop Boundary Reaction
-  (Cop.x = MaxX()) -> F [Cop.x <- Cop.moveL(Cop.x)];
-  (Cop.x = MinX()) -> F [Cop.x <- Cop.moveR(Cop.x)];
-  (Cop.y = MaxY()) -> F [Cop.y <- Cop.moveU(Cop.y)];
-  (Cop.y = MinY()) -> F [Cop.y <- Cop.moveD(Cop.y)];
+  // (Cop.x = MaxX()) -> F [Cop.x <- Cop.moveL(Cop.x)];
+  // (Cop.x = MinX()) -> F [Cop.x <- Cop.moveR(Cop.x)];
+  // (Cop.y = MaxY()) -> F [Cop.y <- Cop.moveU(Cop.y)];
+  // (Cop.y = MinY()) -> F [Cop.y <- Cop.moveD(Cop.y)];
 
-  // // Cop Movement
-  // (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
-  // (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
-  // (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
-  // (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
+  // Cop Movement
+  (Cop.x < Robber.x) -> [Cop.x <- Cop.moveR(Cop.x)];
+  (Cop.x > Robber.x) -> [Cop.x <- Cop.moveL(Cop.x)];
+  (Cop.y > Robber.y) -> [Cop.y <- Cop.moveU(Cop.y)];
+  (Cop.y < Robber.y) -> [Cop.y <- Cop.moveD(Cop.y)];
 
-  // Cop King-Like Movement
-  (Turn = Cop) -> (
-    X ([Cop.x <- Cop.moveR(Cop.x)] || [Cop.x <- Cop.moveL(Cop.x)] || [Cop.x <- Cop.x]) &&
-    X ([Cop.y <- Cop.moveU(Cop.y)] || [Cop.y <- Cop.moveD(Cop.y)] || [Cop.y <- Cop.y]) &&
-
-    X (! ([Cop.x <- Cop.moveR(Cop.x)] && [Cop.x <- Cop.moveL(Cop.x)])) &&
-    X (! ([Cop.x <- Cop.moveR(Cop.x)] && [Cop.x <- Cop.x])) &&
-    X (! ([Cop.x <- Cop.moveL(Cop.x)] && [Cop.x <- Cop.x])) &&
-    X (! ([Cop.y <- Cop.moveU(Cop.y)] && [Cop.y <- Cop.moveD(Cop.y)])) &&
-    X (! ([Cop.y <- Cop.moveU(Cop.y)] && [Cop.y <- Cop.y])) &&
-    X (! ([Cop.y <- Cop.moveD(Cop.y)] && [Cop.y <- Cop.y])) &&
-    X (Turn = robber));
-
-  // // // Winning Condition
   // F ((Cop.x = Robber.x) && (Cop.y = Robber.y));
-
 }
-
-// Notes, Robber should be controlled by the Enviro. Not System.
-// Robber could take control inputs.
-// System must guarantee a win against the Robber despite whatever input.
-// Could be tested with Reinforcement Learning.
-// Look at King's graph stuff.
-// https://en.wikipedia.org/wiki/Cop-win_graph
-// Overall Goal: Benchmarks for reactive synthesis. Show how it is useful. Illustrate how scaling cops and robbers can scale reactive synthesis difficulties.

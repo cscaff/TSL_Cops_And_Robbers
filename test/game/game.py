@@ -41,6 +41,15 @@ class GridGame:
         # Robber Position (fixed for now)
         self.robber_pos = None
 
+        self.robberDirection = {
+            "moveL": False,
+            "moveR": False,
+            "moveU": False,
+            "moveD": False,
+            "stayX": False,
+            "stayY": False
+        }
+
         # Current Turn
         self.turn = "robber"
 
@@ -136,17 +145,47 @@ class GridGame:
             self.draw_grid()
             self.check_game_end()
 
+        # Record Robber Movement State
+        if new_x > rx:
+            self.robberDirection["moveR"] = True
+        if new_x < rx:
+            self.robberDirection["moveL"] = True
+        if new_y > ry:
+            self.robberDirection["moveD"] = True
+        if new_y < ry:
+            self.robberDirection["moveU"] = True
+        if new_y == ry:
+            self.robberDirection["stayY"] = True
+        if new_x == rx:
+            self.robberDirection["stayX"] = True
+
     def cop_move(self):
         if not self.cop_pos:
             return
         
         out = updateState({
             "currentState": self.animation_state,
+            "Robber.moveD": self.robberDirection["moveD"],
+            "Robber.moveL": self.robberDirection["moveL"],
+            "Robber.moveR": self.robberDirection["moveR"],
+            "Robber.moveU": self.robberDirection["moveU"],
+            "Robber.stayX": self.robberDirection["stayX"],
+            "Robber.stayY": self.robberDirection["stayY"],
             "Cop.x": self.cop_pos[0],
             "Cop.y": self.cop_pos[1],
             "Robber.x": self.robber_pos[0],
             "Robber.y": self.robber_pos[1]
         })
+
+        # Reset Robber Movement State
+        self.robberDirection = {
+            "moveL": False,
+            "moveR": False,
+            "moveU": False,
+            "moveD": False,
+            "stayX": False,
+            "stayY": False
+        }
 
         self.animation_state = out["currentState"]
         self.cop_pos = (out["Cop.x"], out["Cop.y"])

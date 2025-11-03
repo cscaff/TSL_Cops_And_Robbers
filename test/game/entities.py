@@ -24,22 +24,12 @@ class Robber:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-
-    def moveL(x):
-        x = x - 1
-        return x
-
-    def moveR(x):
-        x = x + 1
-        return x
-
-    def moveU(y):
-        y = y - 1
-        return y
-
-    def moveD(y):
-        y = y + 1
-        return y
+        
+        # Movement State
+        self.moveL = False
+        self.moveR = False
+        self.moveU = False
+        self.moveD = False
 
 class _next_Robber:
     def __init__(self, x, y):
