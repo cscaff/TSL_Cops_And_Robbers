@@ -1,0 +1,25 @@
+var Int cop_x
+var Int cop_y
+
+SPECIFICATION
+
+assume {
+  eq cop_x i3();
+  eq cop_y i3();
+  gte cop_x i0();
+  gte cop_y i0();
+  lte cop_x i3();
+  lte cop_y i3();
+}
+
+always guarantee {
+  gte cop_x i0();
+  lte cop_x i3();
+  gte cop_y i0();
+  lte cop_y i3();
+
+  ([cop_x <- cop_x] || [cop_x <- add cop_x i1()] || [cop_x <- sub cop_x i1()]);
+  ([cop_y <- cop_y] || [cop_y <- add cop_y i1()] || [cop_y <- sub cop_y i1()]);
+
+  F (eq cop_x i0() && eq cop_y i0());
+}
