@@ -43,7 +43,7 @@ def synthesize(spec: str):
 def inject(code: str):
     # Read the target file
     BASE_DIR = os.path.dirname(__file__)
-    target_path = os.path.join(BASE_DIR, "game", "controller.py")
+    target_path = os.path.join(BASE_DIR, "game", "controller.c")
 
     # Add trace logging
     output = transformer(code)
@@ -60,7 +60,7 @@ def trace_inject():
     new_text = ""
     # Read target file
     BASE_DIR = os.path.dirname(__file__)
-    target_path = os.path.join(BASE_DIR, "game", "controller.py")
+    target_path = os.path.join(BASE_DIR, "game", "controller.c")
     with open(target_path, "r") as f:
         text = f.read()
         new_text = transformer(text)
