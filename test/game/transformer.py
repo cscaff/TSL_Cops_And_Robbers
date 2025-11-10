@@ -74,13 +74,6 @@ def transformer(code_str):
 from datetime import datetime
 from operator import itemgetter
 from entities import Robber, Cop, _next_Cop, _next_Robber
-
-def log_condition(cond_str, current_state, actions):
-    print(f"- - - - - - - - - - - - - - - - -")
-    print(f"t = {datetime.now().strftime("%H:%M:%S")}")
-    print(f"[TRACE] Current State = {current_state}")
-    print(f"[TRACE] Chosen Next Event Condition: {cond_str}")
-    print(f"[TRACE]   Actions to Perform: [{'\\n'.join(actions)}]")\n
 """
 
     source = dep + code_str

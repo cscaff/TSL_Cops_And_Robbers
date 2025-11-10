@@ -20,6 +20,9 @@ always assume {
   // (Robber.x = MinX()) -> X ((Robber.x = Robber.x) || (Robber.x = Robber.x + 1));
   (Robber.x = 0);
 
+  (((Cop.x > Robber.x) ) && (([Cop.x <- Cop.x - 1]) W (Cop.x = Robber.x))) -> F (Cop.x = Robber.x);
+
+
 }
 
 // System Guarantees: Output Signals: Cop Behavior
@@ -30,8 +33,8 @@ always guarantee {
   // ! ([Cop.x <- Cop.x + 1] && [Cop.x <- Cop.x - 1]);
 
   // Grid Actions
+  F (Cop.x = Robber.x);
 
-  (((Cop.x > Robber.x) ) && (([Cop.x <- Cop.x - 1]) W (Cop.x = Robber.x))) -> F (Cop.x = Robber.x);
   // (Cop.x = Robber.x) -> G ([Cop.x <- Cop.x]);
 
 
