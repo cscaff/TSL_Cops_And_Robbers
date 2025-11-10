@@ -20,7 +20,7 @@ def synthesize(spec: str):
 
     # Run the TSL synth command and capture its output
     proc = subprocess.run(
-        ["tsl", "synthesize", "-i", spec_path, "--python"],
+        ["issy", "--tslmt", "--solve", "--synt", spec_path],
         check=True,
         stdout=subprocess.PIPE
     )
