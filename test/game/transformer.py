@@ -64,16 +64,16 @@ class TraceInjector(ast.NodeTransformer):
 
 def transformer(code_str):
     """Accepts Python code as a string and returns instrumented code as a string"""
-    tree = ast.parse(code_str)
-    tree = TraceInjector().visit(tree)
-    ast.fix_missing_locations(tree)
-    source = astor.to_source(tree)
+    # tree = ast.parse(code_str)
+    # tree = TraceInjector().visit(tree)
+    # ast.fix_missing_locations(tree)
+    # source = astor.to_source(tree)
 
     # Dependencies:
     dep = """
 from datetime import datetime
 from operator import itemgetter
-from entities import Robber, Cop, _next_Cop, _next_Robber, MaxX, MaxY, MinX, MinY
+from entities import Robber, Cop, _next_Cop, _next_Robber
 
 def log_condition(cond_str, current_state, actions):
     print(f"- - - - - - - - - - - - - - - - -")
@@ -83,6 +83,6 @@ def log_condition(cond_str, current_state, actions):
     print(f"[TRACE]   Actions to Perform: [{'\\n'.join(actions)}]")\n
 """
 
-    source = dep + source
+    source = dep + code_str
 
     return source

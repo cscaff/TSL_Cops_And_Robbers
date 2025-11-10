@@ -19,6 +19,7 @@ class GridGame:
         _MAX_M = m
         _MAX_N = n
 
+
         # drawing params
         self.cell_size = 50
         self.padding = 2
@@ -55,7 +56,6 @@ class GridGame:
 
         # Animation State
         self.animation_state = 0
-
 
     def draw_grid(self):
         # clear background
@@ -165,6 +165,8 @@ class GridGame:
         
         out = updateState({
             "currentState": self.animation_state,
+            "MaxX": self.m - 1,
+            "MinY": 0,
             "Robber.moveD": self.robberDirection["moveD"],
             "Robber.moveL": self.robberDirection["moveL"],
             "Robber.moveR": self.robberDirection["moveR"],

@@ -1,0 +1,115 @@
+INFO {
+  TITLE:       "Converted TSL Specification"
+  DESCRIPTION: "TSL specification, which has been converted to TLSF."
+  SEMANTICS:   Mealy
+  TARGET:      Mealy
+}
+MAIN {
+  INPUTS {
+    p0b02robber29stay2x;
+    p0b02robber29stay2y;
+    p0b02cop29move2l;
+    p0b02cop29move2r;
+    p0b02cop29stay2x;
+    p0b02cop29move2u;
+    p0b02cop29move2d;
+    p0b02cop29stay2y;
+    p0p0eq02robber29y02cop29y;
+    p0p0eq02robber29y0f1dint231b;
+    p0p0eq02cop29y02robber29y;
+    p0p0eq02robber29x02cop29x;
+    p0p0eq02robber29x0f1dint231b;
+    p0p0eq02cop29x02robber29x;
+    p0p0eq0min2x0f1dint231b;
+    p0p0eq0max2x0f1dint251b;
+    p0p0eq02min2y0f1dint231b;
+    p0p0eq02max2y0f1dint251b;
+    p0p0gt02cop29y02robber29y;
+    p0p0gt02cop29x02robber29x;
+    p0p0lt02cop29y02robber29y;
+    p0p0lt02cop29x02robber29x;
+    p0p0lt02min2y02max2y;
+    p0p0lt02min2x02max2x;
+    p0p0lte02robber29y02max2y;
+    p0p0lte02cop29y02max2y;
+    p0p0lte02robber29x02max2x;
+    p0p0lte02cop29x02max2x;
+    p0p0gte02robber29y02min2y;
+    p0p0gte02cop29y02min2y;
+    p0p0gte02robber29x02min2x;
+    p0p0gte02cop29x02min2x;
+  }
+
+  OUTPUTS {
+    u02cop29y02cop29y;
+    u02cop29y0f1dadd02cop29y0f1dint241b1b;
+    u02cop29y0f1dsub02cop29y0f1dint241b1b;
+    u02cop29x02cop29x;
+    u02cop29x0f1dadd02cop29x0f1dint241b1b;
+    u02cop29x0f1dsub02cop29x0f1dint241b1b;
+  }
+
+  ASSUME {
+    G (G (((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) -> (X (p0p0gt02cop29y02robber29y))));
+    G (G ((((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0gt02cop29y02robber29y)) -> (F (p0p0gt02cop29y02robber29y))));
+    G (G (((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) -> (X (p0p0lt02cop29y02robber29y))));
+    G (G ((((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0lt02cop29y02robber29y)) -> (F (p0p0lt02cop29y02robber29y))));
+    G (G (((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) -> (X (p0p0gt02cop29x02robber29x))));
+    G (G ((((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0gt02cop29x02robber29x)) -> (F (p0p0gt02cop29x02robber29x))));
+    G (G (((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) -> (X (p0p0lt02cop29x02robber29x))));
+    G (G ((((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0lt02cop29x02robber29x)) -> (F (p0p0lt02cop29x02robber29x))));
+    G (G ((((p0p0gt02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0eq02robber29x02cop29x)) -> (F (p0p0eq02robber29x02cop29x))));
+    G (G ((((p0p0gt02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0lt02cop29x02robber29x)) -> (F (p0p0lt02cop29x02robber29x))));
+    G (G ((((p0p0gt02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0eq02robber29x02cop29x)) -> (F (p0p0eq02robber29x02cop29x))));
+    G (G ((((p0p0gt02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0eq02cop29x02robber29x)) -> (F (p0p0eq02cop29x02robber29x))));
+    G (G ((((p0p0lt02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0eq02robber29x02cop29x)) -> (F (p0p0eq02robber29x02cop29x))));
+    G (G ((((p0p0lt02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0gt02cop29x02robber29x)) -> (F (p0p0gt02cop29x02robber29x))));
+    G (G ((((p0p0lt02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0eq02robber29x02cop29x)) -> (F (p0p0eq02robber29x02cop29x))));
+    G (G ((((p0p0lt02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0eq02cop29x02robber29x)) -> (F (p0p0eq02cop29x02robber29x))));
+    G (G ((((p0p0gt02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0eq02robber29y02cop29y)) -> (F (p0p0eq02robber29y02cop29y))));
+    G (G ((((p0p0gt02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0lt02cop29y02robber29y)) -> (F (p0p0lt02cop29y02robber29y))));
+    G (G ((((p0p0gt02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0eq02robber29y02cop29y)) -> (F (p0p0eq02robber29y02cop29y))));
+    G (G ((((p0p0gt02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0eq02cop29y02robber29y)) -> (F (p0p0eq02cop29y02robber29y))));
+    G (G ((((p0p0lt02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0eq02robber29y02cop29y)) -> (F (p0p0eq02robber29y02cop29y))));
+    G (G ((((p0p0lt02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0gt02cop29y02robber29y)) -> (F (p0p0gt02cop29y02robber29y))));
+    G (G ((((p0p0lt02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0eq02robber29y02cop29y)) -> (F (p0p0eq02robber29y02cop29y))));
+    G (G ((((p0p0lt02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0eq02cop29y02robber29y)) -> (F (p0p0eq02cop29y02robber29y))));
+    G (G (((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) -> (X (p0p0gt02cop29y02robber29y))));
+    G (G ((((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0gt02cop29y02robber29y)) -> (F (p0p0gt02cop29y02robber29y))));
+    G (G (((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) -> (X (p0p0lt02cop29y02robber29y))));
+    G (G ((((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0lt02cop29y02robber29y)) -> (F (p0p0lt02cop29y02robber29y))));
+    G (G (((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) -> (X (p0p0gt02cop29x02robber29x))));
+    G (G ((((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0gt02cop29x02robber29x)) -> (F (p0p0gt02cop29x02robber29x))));
+    G (G (((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) -> (X (p0p0lt02cop29x02robber29x))));
+    G (G ((((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0lt02cop29x02robber29x)) -> (F (p0p0lt02cop29x02robber29x))));
+    G (G (((p0p0eq02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) -> (X (p0p0gt02cop29y02robber29y))));
+    G (G ((((p0p0eq02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0gt02cop29y02robber29y)) -> (F (p0p0gt02cop29y02robber29y))));
+    G (G (((p0p0eq02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) -> (X (p0p0lt02cop29y02robber29y))));
+    G (G ((((p0p0eq02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0lt02cop29y02robber29y)) -> (F (p0p0lt02cop29y02robber29y))));
+    G (G (((p0p0eq02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) -> (X (p0p0gt02cop29x02robber29x))));
+    G (G ((((p0p0eq02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0gt02cop29x02robber29x)) -> (F (p0p0gt02cop29x02robber29x))));
+    G (G (((p0p0eq02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) -> (X (p0p0lt02cop29x02robber29x))));
+    G (G ((((p0p0eq02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0lt02cop29x02robber29x)) -> (F (p0p0lt02cop29x02robber29x))));
+    ! ((p0p0eq02robber29x02cop29x) && (p0p0eq02robber29y02cop29y));
+    G (p0p0eq0min2x0f1dint231b);
+    G (p0p0eq0max2x0f1dint251b);
+    G (p0p0eq02min2y0f1dint231b);
+    G (p0p0eq02max2y0f1dint251b);
+    G (p0p0lt02min2x02max2x);
+    G (p0p0lt02min2y02max2y);
+    G ((p0p0lte02robber29x02max2x) && (p0p0gte02robber29x02min2x));
+    G ((p0p0lte02robber29y02max2y) && (p0p0gte02robber29y02min2y));
+    G (! ((p0p0lt02cop29x02robber29x) && (p0p0gt02cop29x02robber29x)));
+    G (! ((p0p0lt02cop29y02robber29y) && (p0p0gt02cop29y02robber29y)));
+    G ((p0p0eq02robber29x0f1dint231b) && (p0p0eq02robber29y0f1dint231b));
+    G (((p0p0eq02robber29x02cop29x) && (p0p0eq02robber29y02cop29y)) -> (G ((p0b02robber29stay2x) && (p0b02robber29stay2y))));
+
+  }
+
+  GUARANTEE {
+    G (((((u02cop29y02cop29y) && (! (u02cop29y0f1dadd02cop29y0f1dint241b1b))) && (! (u02cop29y0f1dsub02cop29y0f1dint241b1b))) || (((u02cop29y0f1dadd02cop29y0f1dint241b1b) && (! (u02cop29y02cop29y))) && (! (u02cop29y0f1dsub02cop29y0f1dint241b1b)))) || (((u02cop29y0f1dsub02cop29y0f1dint241b1b) && (! (u02cop29y02cop29y))) && (! (u02cop29y0f1dadd02cop29y0f1dint241b1b))));
+    G (((((u02cop29x02cop29x) && (! (u02cop29x0f1dadd02cop29x0f1dint241b1b))) && (! (u02cop29x0f1dsub02cop29x0f1dint241b1b))) || (((u02cop29x0f1dadd02cop29x0f1dint241b1b) && (! (u02cop29x02cop29x))) && (! (u02cop29x0f1dsub02cop29x0f1dint241b1b)))) || (((u02cop29x0f1dsub02cop29x0f1dint241b1b) && (! (u02cop29x02cop29x))) && (! (u02cop29x0f1dadd02cop29x0f1dint241b1b))));
+    (((((((((((((((((((((((((((((((((((((((((((((((((((((G (G (((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) -> (X (p0p0gt02cop29y02robber29y))))) && (G (G ((((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0gt02cop29y02robber29y)) -> (F (p0p0gt02cop29y02robber29y)))))) && (G (G (((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) -> (X (p0p0lt02cop29y02robber29y)))))) && (G (G ((((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0lt02cop29y02robber29y)) -> (F (p0p0lt02cop29y02robber29y)))))) && (G (G (((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) -> (X (p0p0gt02cop29x02robber29x)))))) && (G (G ((((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0gt02cop29x02robber29x)) -> (F (p0p0gt02cop29x02robber29x)))))) && (G (G (((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) -> (X (p0p0lt02cop29x02robber29x)))))) && (G (G ((((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0lt02cop29x02robber29x)) -> (F (p0p0lt02cop29x02robber29x)))))) && (G (G ((((p0p0gt02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0eq02robber29x02cop29x)) -> (F (p0p0eq02robber29x02cop29x)))))) && (G (G ((((p0p0gt02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0lt02cop29x02robber29x)) -> (F (p0p0lt02cop29x02robber29x)))))) && (G (G ((((p0p0gt02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0eq02robber29x02cop29x)) -> (F (p0p0eq02robber29x02cop29x)))))) && (G (G ((((p0p0gt02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0eq02cop29x02robber29x)) -> (F (p0p0eq02cop29x02robber29x)))))) && (G (G ((((p0p0lt02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0eq02robber29x02cop29x)) -> (F (p0p0eq02robber29x02cop29x)))))) && (G (G ((((p0p0lt02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0gt02cop29x02robber29x)) -> (F (p0p0gt02cop29x02robber29x)))))) && (G (G ((((p0p0lt02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0eq02robber29x02cop29x)) -> (F (p0p0eq02robber29x02cop29x)))))) && (G (G ((((p0p0lt02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0eq02cop29x02robber29x)) -> (F (p0p0eq02cop29x02robber29x)))))) && (G (G ((((p0p0gt02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0eq02robber29y02cop29y)) -> (F (p0p0eq02robber29y02cop29y)))))) && (G (G ((((p0p0gt02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0lt02cop29y02robber29y)) -> (F (p0p0lt02cop29y02robber29y)))))) && (G (G ((((p0p0gt02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0eq02robber29y02cop29y)) -> (F (p0p0eq02robber29y02cop29y)))))) && (G (G ((((p0p0gt02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0eq02cop29y02robber29y)) -> (F (p0p0eq02cop29y02robber29y)))))) && (G (G ((((p0p0lt02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0eq02robber29y02cop29y)) -> (F (p0p0eq02robber29y02cop29y)))))) && (G (G ((((p0p0lt02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0gt02cop29y02robber29y)) -> (F (p0p0gt02cop29y02robber29y)))))) && (G (G ((((p0p0lt02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0eq02robber29y02cop29y)) -> (F (p0p0eq02robber29y02cop29y)))))) && (G (G ((((p0p0lt02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0eq02cop29y02robber29y)) -> (F (p0p0eq02cop29y02robber29y)))))) && (G (G (((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) -> (X (p0p0gt02cop29y02robber29y)))))) && (G (G ((((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0gt02cop29y02robber29y)) -> (F (p0p0gt02cop29y02robber29y)))))) && (G (G (((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) -> (X (p0p0lt02cop29y02robber29y)))))) && (G (G ((((p0p0eq02robber29y02cop29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0lt02cop29y02robber29y)) -> (F (p0p0lt02cop29y02robber29y)))))) && (G (G (((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) -> (X (p0p0gt02cop29x02robber29x)))))) && (G (G ((((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0gt02cop29x02robber29x)) -> (F (p0p0gt02cop29x02robber29x)))))) && (G (G (((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) -> (X (p0p0lt02cop29x02robber29x)))))) && (G (G ((((p0p0eq02robber29x02cop29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0lt02cop29x02robber29x)) -> (F (p0p0lt02cop29x02robber29x)))))) && (G (G (((p0p0eq02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) -> (X (p0p0gt02cop29y02robber29y)))))) && (G (G ((((p0p0eq02cop29y02robber29y) && (u02cop29y0f1dadd02cop29y0f1dint241b1b)) W (p0p0gt02cop29y02robber29y)) -> (F (p0p0gt02cop29y02robber29y)))))) && (G (G (((p0p0eq02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) -> (X (p0p0lt02cop29y02robber29y)))))) && (G (G ((((p0p0eq02cop29y02robber29y) && (u02cop29y0f1dsub02cop29y0f1dint241b1b)) W (p0p0lt02cop29y02robber29y)) -> (F (p0p0lt02cop29y02robber29y)))))) && (G (G (((p0p0eq02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) -> (X (p0p0gt02cop29x02robber29x)))))) && (G (G ((((p0p0eq02cop29x02robber29x) && (u02cop29x0f1dadd02cop29x0f1dint241b1b)) W (p0p0gt02cop29x02robber29x)) -> (F (p0p0gt02cop29x02robber29x)))))) && (G (G (((p0p0eq02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) -> (X (p0p0lt02cop29x02robber29x)))))) && (G (G ((((p0p0eq02cop29x02robber29x) && (u02cop29x0f1dsub02cop29x0f1dint241b1b)) W (p0p0lt02cop29x02robber29x)) -> (F (p0p0lt02cop29x02robber29x)))))) && (! ((p0p0eq02robber29x02cop29x) && (p0p0eq02robber29y02cop29y)))) && (G (p0p0eq0min2x0f1dint231b))) && (G (p0p0eq0max2x0f1dint251b))) && (G (p0p0eq02min2y0f1dint231b))) && (G (p0p0eq02max2y0f1dint251b))) && (G (p0p0lt02min2x02max2x))) && (G (p0p0lt02min2y02max2y))) && (G ((p0p0lte02robber29x02max2x) && (p0p0gte02robber29x02min2x)))) && (G ((p0p0lte02robber29y02max2y) && (p0p0gte02robber29y02min2y)))) && (G (! ((p0p0lt02cop29x02robber29x) && (p0p0gt02cop29x02robber29x))))) && (G (! ((p0p0lt02cop29y02robber29y) && (p0p0gt02cop29y02robber29y))))) && (G ((p0p0eq02robber29x0f1dint231b) && (p0p0eq02robber29y0f1dint231b)))) && (G (((p0p0eq02robber29x02cop29x) && (p0p0eq02robber29y02cop29y)) -> (G ((p0b02robber29stay2x) && (p0b02robber29stay2y)))))) -> (((((((((((((G ((p0p0gte02cop29x02min2x) && (p0p0lte02cop29x02max2x))) && (G ((p0p0gte02cop29y02min2y) && (p0p0lte02cop29y02max2y)))) && (G ((((p0b02cop29move2l) || (p0b02cop29move2r)) || (p0b02cop29stay2x)) && (((p0b02cop29move2u) || (p0b02cop29move2d)) || (p0b02cop29stay2y))))) && (G ((! ((p0b02cop29move2l) && (p0b02cop29move2r))) && (! ((p0b02cop29move2u) && (p0b02cop29move2d)))))) && (G ((! ((p0b02cop29move2l) && (p0b02cop29stay2x))) && (! ((p0b02cop29move2r) && (p0b02cop29stay2x)))))) && (G ((! ((p0b02cop29move2u) && (p0b02cop29stay2y))) && (! ((p0b02cop29move2d) && (p0b02cop29stay2y)))))) && (G ((p0b02cop29move2l) -> (X (u02cop29x0f1dsub02cop29x0f1dint241b1b))))) && (G ((p0b02cop29move2r) -> (X (u02cop29x0f1dadd02cop29x0f1dint241b1b))))) && (G ((p0b02cop29move2u) -> (X (u02cop29y0f1dsub02cop29y0f1dint241b1b))))) && (G ((p0b02cop29move2d) -> (X (u02cop29y0f1dadd02cop29y0f1dint241b1b))))) && (G ((p0b02cop29stay2x) -> (X (u02cop29x02cop29x))))) && (G ((p0b02cop29stay2y) -> (X (u02cop29y02cop29y))))) && (G (F ((p0p0eq02cop29x02robber29x) && (p0p0eq02cop29y02robber29y)))));
+
+  }
+}

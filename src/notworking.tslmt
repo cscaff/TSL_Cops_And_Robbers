@@ -1,0 +1,74 @@
+#LIA  
+//This is a test file for Cops and Robbers Positioning System Only.
+
+initially assume {
+  ! (Robber.x = Cop.x && Robber.y = Cop.y);
+}
+
+// Assumptions on the Input Signals
+always assume {
+  // Grid Parameters
+  minX = 0;
+  maxX = 2;
+  MinY = 0;
+  MaxY = 2;
+  
+  (MinX < MaxX);
+  (MinY < MaxY);
+
+  // Robber must stay within Grid
+  (Robber.x <= MaxX) && (Robber.x >= MinX);
+  (Robber.y <= MaxY) && (Robber.y >= MinY);
+
+  // Robber Relative Positioning
+  ! (Cop.x < Robber.x && Cop.x > Robber.x);
+  ! (Cop.y < Robber.y && Cop.y > Robber.y);
+
+  // // Robber Movements
+  // (Robber.moveL || Robber.moveR || Robber.stayX) && (Robber.moveU || Robber.moveD || Robber.stayY);
+
+  // // Robber Movement Exclusivity
+  // (! (Robber.moveL && Robber.moveR) && ! (Robber.moveU && Robber.moveD));
+  // (! (Robber.moveL && Robber.stayX) && ! (Robber.moveR && Robber.stayX));
+  // (! (Robber.moveU && Robber.stayY) && ! (Robber.moveD && Robber.stayY));
+
+  // // Robber Movement Effects
+  // Robber.moveL -> X (Robber.x = Robber.x - 1);
+  // Robber.moveR -> X (Robber.x = Robber.x + 1);
+  // Robber.moveU -> X (Robber.y = Robber.y - 1);
+  // Robber.moveD -> X (Robber.y = Robber.y + 1);
+  // Robber.stayX -> X (Robber.x = Robber.x);
+  // Robber.stayY -> X (Robber.y = Robber.y);
+  (Robber.x = 0) && (Robber.y = 0);
+
+  (Robber.x = Cop.x && Robber.y = Cop.y) -> G (Robber.stayX && Robber.stayY);
+
+}
+
+// System Guarantees: Output Signals: Cop Behavior
+always guarantee {
+  // Cop Boundary Reaction
+  (Cop.x >= MinX) && (Cop.x <= MaxX);
+  (Cop.y >= MinY) && (Cop.y <= MaxY);
+
+  // // Cop Movement
+  // (Cop.x < Robber.x) -> X (Cop.moveR );
+  // (Cop.x > Robber.x) -> X (Cop.moveL );
+  // (Cop.y < Robber.y) -> X (Cop.moveD );
+  // (Cop.y > Robber.y) -> X (Cop.moveU );
+
+  (! (Cop.moveL && Cop.moveR) && ! (Cop.moveU && Cop.moveD));
+  (! (Cop.moveL && Cop.stayX) && ! (Cop.moveR && Cop.stayX));
+  (! (Cop.moveU && Cop.stayY) && ! (Cop.moveD && Cop.stayY));
+
+  // Cop Movement Effects
+  Cop.moveL -> X [Cop.x <- Cop.x - 1];
+  Cop.moveR -> X [Cop.x <- Cop.x + 1];
+  Cop.moveU -> X [Cop.y <- Cop.y - 1];
+  Cop.moveD -> X [Cop.y <- Cop.y + 1];
+  Cop.stayX -> X [Cop.x <- Cop.x];
+  Cop.stayY -> X [Cop.y <- Cop.y];
+
+  // Cop Capture Condition
+  (( ! (Cop.x = Robber.x && Cop.y = Robber.y) ) && (((Cop.moveL || Cop.moveR || Cop.stayX) && (Cop.moveU || Cop.moveD || Cop.stayY)) W (Cop.x = Robber.x && Cop.y = Robber.y))) -> F (Cop.x = Robber.x && Cop.y = Robber.y);
+}

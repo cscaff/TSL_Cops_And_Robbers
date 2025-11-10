@@ -46,11 +46,11 @@ def inject(code: str):
     target_path = os.path.join(BASE_DIR, "game", "controller.py")
 
     # Add trace logging
-    # output = transformer(code)
+    output = transformer(code)
 
     # Write Back
     with open(target_path, "w") as f:
-        f.write(code) 
+        f.write(output) 
     
     print(f"Done!\n ------- Injected updateState into {target_path}\n-------")
 
