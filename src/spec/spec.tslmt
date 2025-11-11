@@ -10,7 +10,6 @@ assume {
   gte cop_x i0() && gte cop_y i0();
   lte cop_x i3() && lte cop_y i3();
 
-  eq robber_x i1() && eq robber_y i2();
   gte robber_x i0() && gte robber_y i0();
   lte robber_x i3() && lte robber_y i3();
 
@@ -26,5 +25,4 @@ always guarantee {
   ([cop_y <- cop_y] || [cop_y <- add cop_y i1()] || [cop_y <- sub cop_y i1()]);
 
   F  G (eq cop_x robber_x && eq cop_y robber_y);
-
 }
