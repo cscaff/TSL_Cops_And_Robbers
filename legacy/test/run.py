@@ -46,7 +46,8 @@ def inject(code: str):
     target_path = os.path.join(BASE_DIR, "game", "controller.c")
 
     # Add trace logging
-    output = transformer(code)
+    # output = transformer(code)
+    output = code
 
     # Write Back
     with open(target_path, "w") as f:
