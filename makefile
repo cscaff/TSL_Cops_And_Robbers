@@ -1,33 +1,56 @@
-# ---- Configuration ----
-SCRIPT = ./run.sh
-TARGET = ./src/controller/controller.c
+# ---------------- Compiler ----------------
+CC = clang
+CFLAGS = -Wall -std=c99 $(shell pkg-config --cflags raylib)
+LDFLAGS = $(shell pkg-config --libs raylib)
+
+# ---------------- Raylib game ----------------
+GAME_SRC = ./test/game.c
+GAME_BIN = cop_robber
+
+# ---------------- Controller test ----------------
+CONTROLLER = ./src/controller/controller.c
 TEST_SRC = ./test/game.c
 TEST_BIN = ./test/controller_test
+SCRIPT = ./test/synthesize.sh
 
-# ---- Default target ----
+# ---------------- Default ----------------
 .PHONY: all
 all: run
 
-# ---- Run Issy + test ----
-.PHONY: run
-run:
-	@echo ">>> Running Issy and tests..."
-	$(SCRIPT)
-	@echo ">>> Done."
+# ---------------- Build & run Raylib game ----------------
+.PHONY: game
+game: $(GAME_BIN)
 
-# ---- Compile and run test only ----
+$(GAME_BIN): $(GAME_SRC) 
+	@echo ">>> Compiling Raylib game..."
+	$(CC) $(CFLAGS) $(GAME_SRC) $(LDFLAGS) -o $@
+	
+
+# ---------------- Synthesize controller ----------------
+.PHONY: synthesize
+synthesize: $(CONTROLLER)
+
+$(CONTROLLER):
+	@echo ">>> Running synthesis script..."
+	$(SCRIPT)
+	@echo ">>> Controller generated at $(CONTROLLER)"
+
+# ---------------- Compile & run test harness ----------------
 .PHONY: test
 test: $(TEST_BIN)
 	@echo ">>> Running test harness..."
-	$(TEST_BIN)
+	./$(TEST_BIN)
 
-# ---- Build test binary ----
-$(TEST_BIN): $(TEST_SRC) $(TARGET)
+$(TEST_BIN): $(TEST_SRC) $(CONTROLLER)
 	@echo ">>> Compiling test harness..."
-	gcc -Wall -Wextra -O2 -o $@ $(TEST_SRC)
+	$(CC) -Wall -std=c99 -o $@ $(TEST_SRC) $(CONTROLLER)
 
-# ---- Clean ----
+# ---------------- Run everything ----------------
+.PHONY: run
+run: synthesize test
+
+# ---------------- Clean ----------------
 .PHONY: clean
 clean:
-	@echo ">>> Cleaning test binaries..."
-	rm -f $(TEST_BIN)
+	@echo ">>> Cleaning binaries..."
+	rm -f $(GAME_BIN) $(TEST_BIN)

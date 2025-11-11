@@ -8,18 +8,18 @@ SPECIFICATION
 
 assume {
   gte cop_x i0() && gte cop_y i0();
-  lte cop_x i3() && lte cop_y i3();
+  lte cop_x i6() && lte cop_y i6();
 
   gte robber_x i0() && gte robber_y i0();
-  lte robber_x i3() && lte robber_y i3();
+  lte robber_x i6() && lte robber_y i6();
 
   // Resolved missing COLORED HOA tag VVVV
   (eq cop_x robber_x && eq cop_y robber_y) -> X (eq cop_x robber_x && eq cop_y robber_y);
 }
 
 always guarantee {
-  gte cop_x i0() && lte cop_x i3();
-  gte cop_y i0() && lte cop_y i3();
+  gte cop_x i0() && lte cop_x i6();
+  gte cop_y i0() && lte cop_y i6();
 
   ([cop_x <- cop_x] || [cop_x <- add cop_x i1()] || [cop_x <- sub cop_x i1()]);
   ([cop_y <- cop_y] || [cop_y <- add cop_y i1()] || [cop_y <- sub cop_y i1()]);
