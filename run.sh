@@ -32,16 +32,3 @@ fi
 # { echo "/* --- injected: begin --- */"; issy --tslmt --solve --synt "$SPEC_PATH"; echo "/* --- injected: end --- */"; } >"$TARGET"
 
 echo "Wrote controller to $TARGET"
-
-# Run tests that use controller.c (replace with your actual test command)
-# examples:
-#   - if you have a test script: ./run_controller_tests.sh
-#   - if you use make: make -C ./test file_name_test
-#   - if tests are a binary: ./test/run_tests "$TARGET"
-# Here is a placeholder:
-if [[ -x "./run_controller_tests.sh" ]]; then
-  echo "Running ./run_controller_tests.sh..."
-  ./run_controller_tests.sh "$TARGET"
-else
-  echo "No test script found at ./run_controller_tests.sh — replace this with your test command"
-fi

@@ -7,22 +7,24 @@ var Int robber_y
 SPECIFICATION
 
 assume {
-  eq cop_x i3() && eq cop_y i3();
   gte cop_x i0() && gte cop_y i0();
   lte cop_x i3() && lte cop_y i3();
 
+  eq robber_x i1() && eq robber_y i2();
   gte robber_x i0() && gte robber_y i0();
   lte robber_x i3() && lte robber_y i3();
+
+  // Resolved missing COLORED HOA tag VVVV
+  (eq cop_x robber_x && eq cop_y robber_y) -> X (eq cop_x robber_x && eq cop_y robber_y);
 }
 
 always guarantee {
-  gte cop_x i0();
-  lte cop_x i3();
-  gte cop_y i0();
-  lte cop_y i3();
+  gte cop_x i0() && lte cop_x i3();
+  gte cop_y i0() && lte cop_y i3();
 
   ([cop_x <- cop_x] || [cop_x <- add cop_x i1()] || [cop_x <- sub cop_x i1()]);
   ([cop_y <- cop_y] || [cop_y <- add cop_y i1()] || [cop_y <- sub cop_y i1()]);
 
-  F (eq cop_x robber_x && eq cop_y robber_y);
+  F  G (eq cop_x robber_x && eq cop_y robber_y);
+
 }
