@@ -1,12 +1,3 @@
-// #include <stdio.h>
-// #include <stdlib.h>
-// // #include "raylib.h"
-
-
-// #define main controller_main
-// #include "../src/controller/controller.c"
-// #undef main
-
 #include "/opt/homebrew/opt/raylib/include/raylib.h"
 #include <math.h>
 #include <pthread.h>
