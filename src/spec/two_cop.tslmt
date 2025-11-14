@@ -1,0 +1,53 @@
+var Int cop_x
+var Int cop_y
+
+var Int cop_x_two
+var Int cop_y_two
+
+var Int robber_x
+var Int robber_y
+
+SPECIFICATION
+
+assume {
+  gte cop_x i0() && gte cop_y i0();
+  lte cop_x i6() && lte cop_y i6();
+
+  gte cop_x_two i0() && gte cop_y_two i0();
+  lte cop_x_two i6() && lte cop_y_two i6();
+
+
+  gte robber_x i0() && gte robber_y i0();
+  lte robber_x i6() && lte robber_y i6();
+
+  // ! (eq robber_x i2() && eq robber_y i2());
+
+  // Resolved missing COLORED HOA tag VVVV
+  (eq cop_x robber_x && eq cop_y robber_y) -> X (eq cop_x robber_x && eq cop_y robber_y);
+  (eq cop_x_two robber_x && eq cop_y_two robber_y) -> X (eq cop_x_two robber_x && eq cop_y_two robber_y);
+
+}
+
+always guarantee {
+  gte cop_x i0() && lte cop_x i6();
+  gte cop_y i0() && lte cop_y i6();
+
+  gte cop_x_two i0() && gte cop_y_two i0();
+  lte cop_x_two i6() && lte cop_y_two i6();
+
+
+  ([cop_x <- cop_x] || [cop_x <- add cop_x i1()] || [cop_x <- sub cop_x i1()]);
+  ([cop_y <- cop_y] || [cop_y <- add cop_y i1()] || [cop_y <- sub cop_y i1()]);
+
+  ([cop_x_two <- cop_x_two] || [cop_x_two <- add cop_x_two i1()] || [cop_x_two <- sub cop_x_two i1()]);
+  ([cop_y_two <- cop_y_two] || [cop_y_two <- add cop_y_two i1()] || [cop_y_two <- sub cop_y_two i1()]);
+
+
+  // ! (eq cop_x i2() && eq cop_y i2());
+  // ! (eq cop_x_two i2() && eq cop_y_two i2());
+
+
+  F  G ((eq cop_x robber_x && eq cop_y robber_y) || (eq cop_x_two robber_x && eq cop_y_two robber_y));
+
+}
+

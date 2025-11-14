@@ -1,6 +1,9 @@
 var Int cop_x
 var Int cop_y
 
+var Int cop_x_two
+var Int cop_y_two
+
 var Int robber_x
 var Int robber_y
 
@@ -15,6 +18,7 @@ assume {
 
   // Resolved missing COLORED HOA tag VVVV
   (eq cop_x robber_x && eq cop_y robber_y) -> X (eq cop_x robber_x && eq cop_y robber_y);
+
 }
 
 always guarantee {
@@ -25,4 +29,6 @@ always guarantee {
   ([cop_y <- cop_y] || [cop_y <- add cop_y i1()] || [cop_y <- sub cop_y i1()]);
 
   F  G (eq cop_x robber_x && eq cop_y robber_y);
+
 }
+

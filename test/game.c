@@ -31,6 +31,11 @@ int main(void) {
     cop_x = 0;
     cop_y = 0;
 
+    // Cop Two
+    cop_x_two = 0;
+    cop_y_two = 0;
+
+
     robber_x = GRID_SIZE - 1;
     robber_y = GRID_SIZE - 1;
 
@@ -58,6 +63,8 @@ int main(void) {
         // Draw cop and robber
         DrawRectangle(robber_x * CELL_SIZE, robber_y * CELL_SIZE, CELL_SIZE, CELL_SIZE, RED);
         DrawRectangle(cop_x * CELL_SIZE, cop_y * CELL_SIZE, CELL_SIZE, CELL_SIZE, BLUE);
+        DrawRectangle(cop_x_two * CELL_SIZE, cop_y_two * CELL_SIZE, CELL_SIZE, CELL_SIZE, GREEN);
+
 
 
         if (caught) {
