@@ -3,10 +3,11 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdatomic.h>
+#include <atomic>
 #include <unistd.h>
+#include <fstream>
 
-#include "../src/controller/controller.c"
+#include "../src/controller/controller.cpp"
 
 #define GRID_SIZE 7
 #define CELL_SIZE 80
@@ -21,6 +22,26 @@ void* controller_thread(void* arg) {
     return NULL;
 }
 
+int write_to_file(const char* filename) {
+    // String Trace
+    // Append Final State
+    trace += std::string("{\"RobberX\":") + std::to_string(robber_x) +
+            ", \"RobberY\": " + std::to_string(robber_y) +
+            ", \"CopX\": " + std::to_string(cop_x) +
+            ", \"CopY\": " + std::to_string(cop_y) + "}\n";
+
+    // Enclose Current Trace
+    trace = std::string("<TRACE_START>\n") + trace + std::string("<TRACE_END>\n");
+
+    std::ofstream file(filename, std::ios::app);
+    if (!file.is_open()) {
+        return -1; 
+    }
+    file << trace;
+    file.close();
+    return 0;
+}
+
 int main(void) {
     pthread_t tid;
     pthread_create(&tid, NULL, controller_thread, NULL);
@@ -31,9 +52,9 @@ int main(void) {
     cop_x = 0;
     cop_y = 0;
 
-    // Cop Two
-    cop_x_two = 0;
-    cop_y_two = 0;
+    // // Cop Two
+    // cop_x_two = 0;
+    // cop_y_two = 0;
 
 
     robber_x = GRID_SIZE - 1;
@@ -63,7 +84,7 @@ int main(void) {
         // Draw cop and robber
         DrawRectangle(robber_x * CELL_SIZE, robber_y * CELL_SIZE, CELL_SIZE, CELL_SIZE, RED);
         DrawRectangle(cop_x * CELL_SIZE, cop_y * CELL_SIZE, CELL_SIZE, CELL_SIZE, BLUE);
-        DrawRectangle(cop_x_two * CELL_SIZE, cop_y_two * CELL_SIZE, CELL_SIZE, CELL_SIZE, GREEN);
+        // DrawRectangle(cop_x_two * CELL_SIZE, cop_y_two * CELL_SIZE, CELL_SIZE, CELL_SIZE, GREEN);
 
 
 
@@ -74,6 +95,7 @@ int main(void) {
         EndDrawing();
 
         if (caught) {
+            write_to_file("trace.txt");
             WaitTime(2.0);
             break;
         }

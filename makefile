@@ -1,15 +1,19 @@
 # ---------------- Compiler ----------------
-CC = clang
-CFLAGS = -Wall -std=c99 $(shell pkg-config --cflags raylib)
-LDFLAGS = $(shell pkg-config --libs raylib)
+CC = clang++
+CFLAGS = -Wall -std=c++17 $(shell pkg-config --cflags raylib)
+LDFLAGS = $(shell pkg-config --libs raylib) \
+          -framework Cocoa \
+          -framework IOKit \
+          -framework CoreVideo
+
 
 # ---------------- Raylib game ----------------
-GAME_SRC = ./test/game.c
+GAME_SRC = ./test/game.cpp
 GAME_BIN = cop_robber
 
 # ---------------- Controller test ----------------
-CONTROLLER = ./src/controller/controller.c
-TEST_SRC = ./test/game.c
+CONTROLLER = ./src/controller/controller.cpp
+TEST_SRC = ./test/game.cpp
 TEST_BIN = ./test/controller_test
 SCRIPT = ./test/synthesize.sh
 
@@ -24,6 +28,7 @@ game: $(GAME_BIN)
 $(GAME_BIN): $(GAME_SRC) 
 	@echo ">>> Compiling Raylib game..."
 	$(CC) $(CFLAGS) $(GAME_SRC) $(LDFLAGS) -o $@
+	
 	
 
 # ---------------- Synthesize controller ----------------

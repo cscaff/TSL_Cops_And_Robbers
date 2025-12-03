@@ -1,0 +1,32 @@
+var Int cop_x
+var Int cop_y
+
+var Int robber_x
+var Int robber_y
+
+var Int robber_two_x
+var Int robber_two_y
+
+
+SPECIFICATION
+
+assume {
+  gte cop_x i0() && gte cop_y i0();
+  lte cop_x i5() && lte cop_y i5();
+
+  eq robber_x i0() && eq robber_y i0();
+  eq robber_two_x i4() && eq robber_two_y i4();
+}
+
+always guarantee {
+  gte cop_x i0() && lte cop_x i5();
+  gte cop_y i0() && lte cop_y i5();
+
+  ([cop_x <- cop_x] || [cop_x <- add cop_x i1()] || [cop_x <- sub cop_x i1()]);
+  ([cop_y <- cop_y] || [cop_y <- add cop_y i1()] || [cop_y <- sub cop_y i1()]);
+
+  F (eq cop_x robber_x && eq cop_y robber_y) || F (eq cop_x robber_two_x && eq cop_y robber_two_y);
+  // (eq cop_x robber_x && eq cop_y robber_y) -> F (eq cop_x robber_two_x && eq cop_y robber_two_y);
+  // (eq cop_x robber_two_x && eq cop_y robber_two_y) -> F (eq cop_x robber_x && eq cop_y robber_y);
+
+}

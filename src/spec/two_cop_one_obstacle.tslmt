@@ -11,15 +11,20 @@ SPECIFICATION
 
 assume {
   gte cop_x i0() && gte cop_y i0();
-  lte cop_x i1() && lte cop_y i1();
+  lte cop_x i2() && lte cop_y i2();
 
   gte cop_x_two i0() && gte cop_y_two i0();
-  lte cop_x_two i1() && lte cop_y_two i1();
+  lte cop_x_two i2() && lte cop_y_two i2();
 
   gte robber_x i0() && gte robber_y i0();
-  lte robber_x i1() && lte robber_y i1();
+  lte robber_x i2() && lte robber_y i2();
 
   ! (eq cop_x cop_x_two);
+
+  // Obstacle
+  // ! ((eq cop_x i1()) && (eq cop_y i1()));
+  // ! ((eq cop_x_two i1()) && (eq cop_y_two i1()));
+  // ! ((eq robber_x i1()) && (eq robber_y i1()));
 
   // Resolved missing COLORED HOA tag VVVV
   (eq cop_x robber_x && eq cop_y robber_y) -> X (eq cop_x robber_x && eq cop_y robber_y);
@@ -28,11 +33,11 @@ assume {
 }
 
 always guarantee {
-  gte cop_x i0() && lte cop_x i1();
-  gte cop_y i0() && lte cop_y i1();
+  gte cop_x i0() && lte cop_x i2();
+  gte cop_y i0() && lte cop_y i2();
 
   gte cop_x_two i0() && gte cop_y_two i0();
-  lte cop_x_two i1() && lte cop_y_two i1();
+  lte cop_x_two i2() && lte cop_y_two i2();
 
   ([cop_x <- cop_x] || [cop_x <- add cop_x i1()] || [cop_x <- sub cop_x i1()]);
   ([cop_y <- cop_y] || [cop_y <- add cop_y i1()] || [cop_y <- sub cop_y i1()]);
@@ -42,6 +47,10 @@ always guarantee {
 
   // Two Cops Cannot Maintain Same Position
   ! (eq cop_x cop_x_two);
+
+  // Obstacle
+  // ! ((eq cop_x i1()) && (eq cop_y i1()));
+  // ! ((eq cop_x_two i1()) && (eq cop_y_two i1()));
 
   F  G ((eq cop_x robber_x && eq cop_y robber_y) || (eq cop_x_two robber_x && eq cop_y_two robber_y));
 
