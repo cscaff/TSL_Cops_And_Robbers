@@ -6,6 +6,7 @@
 #include <atomic>
 #include <unistd.h>
 #include <fstream>
+#include <ctime>
 
 #include "../src/controller/controller.cpp"
 
@@ -49,16 +50,17 @@ int main(void) {
     InitWindow(SCREEN_SIZE, SCREEN_SIZE, "Cop and Robber Grid Game");
     SetTargetFPS(10);
 
-    cop_x = 0;
-    cop_y = 0;
+    srand(time(NULL));
 
-    // // Cop Two
-    // cop_x_two = 0;
-    // cop_y_two = 0;
+    // Random cop position
+    cop_x = rand() % GRID_SIZE;
+    cop_y = rand() % GRID_SIZE;
 
-
-    robber_x = GRID_SIZE - 1;
-    robber_y = GRID_SIZE - 1;
+    // Random robber position, ensuring different from cop
+    do {
+        robber_x = rand() % GRID_SIZE;
+        robber_y = rand() % GRID_SIZE;
+    } while (robber_x == cop_x && robber_y == cop_y);
 
     while (!WindowShouldClose()) {
         // --- Input for robber (player-controlled) ---
