@@ -1,11 +1,9 @@
 #include "/opt/homebrew/opt/raylib/include/raylib.h"
-#include <math.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <atomic>
+#include "../../src/controller/controller.cpp"
 
-// #include <unistd.h>
+// Threading
+#include <pthread.h>
+#include <atomic>
 
 // FIle I/O
 #include <fstream>
@@ -13,7 +11,6 @@
 // Randomization
 #include <ctime>
 
-#include "../../src/controller/controller.cpp"
 
 #define GRID_SIZE 7
 #define CELL_SIZE 80
