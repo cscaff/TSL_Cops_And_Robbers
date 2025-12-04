@@ -41,6 +41,32 @@ int write_to_file(const char* filename) {
     return 0;
 }
 
+// Optional Random Robber Movement Generator
+std::tuple<int, int> movement_generator() {
+    // Establish New Position
+    int new_robber_x = robber_x;
+    int new_robber_y = robber_y;
+
+    int dir = rand() % 4;
+    switch (dir) {
+        case 0: new_robber_y = robber_y - 1; // Up
+        case 1: new_robber_y = robber_y + 1;  // Down
+        case 2: new_robber_x = robber_x - 1; // Left
+        case 3: new_robber_x = robber_x + 1;  // Right
+        default: return std::make_tuple(0, 0); // No movement
+    }
+
+    // Constrain to Grid
+    if (new_robber_x < 0 || new_robber_x >= GRID_SIZE ||
+        new_robber_y < 0 || new_robber_y >= GRID_SIZE) {
+        return std::make_tuple(robber_x, robber_y); // No movement
+    }
+    else {
+        return std::make_tuple(new_robber_x, new_robber_y);
+    }
+}
+
+
 int main(void) {
     pthread_t tid;
     pthread_create(&tid, NULL, controller_thread, NULL);

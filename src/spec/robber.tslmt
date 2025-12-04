@@ -1,0 +1,26 @@
+var Int cop_x
+var Int cop_y
+
+var Int robber_x
+var Int robber_y
+
+SPECIFICATION
+
+assume {
+  gte cop_x i0() && gte cop_y i0();
+  lte cop_x i6() && lte cop_y i6();
+
+  gte robber_x i0() && gte robber_y i0();
+  lte robber_x i6() && lte robber_y i6();
+  
+}
+
+always guarantee {
+  gte robber_x i0() && gte robber_y i0();
+  lte robber_x i6() && lte robber_y i6();
+
+  (lt robber_x cop_x && gt robber_x i0()) -> X ([robber_x <- sub robber_x i1()]);
+  (gt robber_x cop_x && lt robber_x i6()) -> X ([robber_x <- add robber_x i1()]);
+  (lt robber_y cop_y && gt robber_y i0()) -> X ([robber_y <- sub robber_y i1()]);
+  (gt robber_y cop_y && lt robber_y i6()) -> X ([robber_y <- add robber_y i1()]);
+}
