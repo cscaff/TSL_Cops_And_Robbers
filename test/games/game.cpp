@@ -13,7 +13,7 @@
 // Randomization
 #include <ctime>
 
-#include "../src/controller/controller.cpp"
+#include "../../src/controller/controller.cpp"
 
 #define GRID_SIZE 7
 #define CELL_SIZE 80

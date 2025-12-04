@@ -8,20 +8,21 @@ LDFLAGS = $(shell pkg-config --libs raylib) \
 
 
 # ---------------- Raylib game ----------------
-GAME_SRC = ./test/game.cpp
-GAME_BIN = cop_robber
+GAME_SRC = ./test/games/game.cpp
+GAME_BIN = ./test/exe/cop_robber
 
 # ---------------- Controller test ----------------
 CONTROLLER = ./src/controller/controller.cpp
-TEST_SRC = ./test/game.cpp
-TEST_BIN = ./test/controller_test
-SCRIPT = ./test/synthesize.sh
 
 # ---------------- Default ----------------
 .PHONY: all
 all: run
 
-# ---------------- Build & run Raylib game ----------------
+# ---------------- Run everything ----------------
+.PHONY: run
+run: synthesize game
+
+# ---------------- Build Raylib game ----------------
 .PHONY: game
 game: $(GAME_BIN)
 
@@ -30,29 +31,12 @@ $(GAME_BIN): $(GAME_SRC)
 	$(CC) $(CFLAGS) $(GAME_SRC) $(LDFLAGS) -o $@
 	
 	
-
 # ---------------- Synthesize controller ----------------
 .PHONY: synthesize
-synthesize: $(CONTROLLER)
-
-$(CONTROLLER):
+synthesize:
 	@echo ">>> Running synthesis script..."
-	$(SCRIPT)
+	./test/synthesize.sh
 	@echo ">>> Controller generated at $(CONTROLLER)"
-
-# ---------------- Compile & run test harness ----------------
-.PHONY: test
-test: $(TEST_BIN)
-	@echo ">>> Running test harness..."
-	./$(TEST_BIN)
-
-$(TEST_BIN): $(TEST_SRC) $(CONTROLLER)
-	@echo ">>> Compiling test harness..."
-	$(CC) -Wall -std=c99 -o $@ $(TEST_SRC) $(CONTROLLER)
-
-# ---------------- Run everything ----------------
-.PHONY: run
-run: synthesize test
 
 # ---------------- Clean ----------------
 .PHONY: clean
