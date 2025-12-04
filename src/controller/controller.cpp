@@ -4,31 +4,34 @@
 #include <string>
 #include <iostream>
 
+// Enviornment Inputs
 int cop_x = 0;
 int cop_y = 0;
 
 int robber_x = 6;
 int robber_y = 6;
 
+// Player Inputs
 volatile int new_input_ready = 0;
 volatile int player_dx = 0;
 volatile int player_dy = 0;
 
+// Trace Output
 std::string trace = "";
 
 // Build robber random controller so we can get quick traces (5)
-// Make an issue Issue RN for the spec that is failing. 
 
 void read_inputs() {
     // Wait until the game sets new input
     while (!new_input_ready) {
-        usleep(1000); // sleep 1ms to avoid busy wait
+        usleep(1000);
     }
 
     // Apply the player input to robber position
     robber_x += player_dx;
     robber_y += player_dy;
 
+    // Record Trace
     trace += std::string("{\"RobberX\":") + std::to_string(robber_x) +
             ", \"RobberY\": " + std::to_string(robber_y) +
             ", \"CopX\": " + std::to_string(cop_x) +
@@ -42,6 +45,7 @@ void read_inputs() {
     new_input_ready = 0;
 }
 
+// System Controller
 void step_controller() {
   {
     int prog_counter = 0;

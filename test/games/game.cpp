@@ -11,14 +11,10 @@
 // Randomization
 #include <ctime>
 
-
+// Grid Sizing
 #define GRID_SIZE 7
 #define CELL_SIZE 80
 #define SCREEN_SIZE (GRID_SIZE * CELL_SIZE)
-
-typedef struct {
-    int x, y;
-} Player;
 
 void* controller_thread(void* arg) {
     step_controller(); // synthesized controller
