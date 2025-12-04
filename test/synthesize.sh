@@ -3,9 +3,9 @@ set -euo pipefail
 
 # Usage: ./update_and_test.sh /path/to/spec.tsl
 # Default target file (relative to current dir)
-TARGET="./src/controller/controller.c"
+TARGET="./src/controller/controller_two_fixed.c"
 
-SPEC_PATH="./src/spec/spec.tslmt"
+SPEC_PATH="/Users/christianscaff/Documents/Academics/Columbia/Barnard-PL-Lab/TSL-Cops-And-Robbers/src/spec/two_fixed.tslmt"
 
 if [[ -z "$SPEC_PATH" ]]; then
   echo "Usage: $0 /path/to/spec.tsl [target_file]"

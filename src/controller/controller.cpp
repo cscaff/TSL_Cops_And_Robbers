@@ -16,6 +16,9 @@ volatile int player_dy = 0;
 
 std::string trace = "";
 
+// Build robber random controller so we can get quick traces (5)
+// Make an issue Issue RN for the spec that is failing. 
+
 void read_inputs() {
     // Wait until the game sets new input
     while (!new_input_ready) {
