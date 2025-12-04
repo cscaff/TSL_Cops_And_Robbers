@@ -4,8 +4,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <atomic>
-#include <unistd.h>
+
+// #include <unistd.h>
+
+// FIle I/O
 #include <fstream>
+
+// Randomization
 #include <ctime>
 
 #include "../src/controller/controller.cpp"
@@ -87,7 +92,6 @@ int main(void) {
         DrawRectangle(robber_x * CELL_SIZE, robber_y * CELL_SIZE, CELL_SIZE, CELL_SIZE, RED);
         DrawRectangle(cop_x * CELL_SIZE, cop_y * CELL_SIZE, CELL_SIZE, CELL_SIZE, BLUE);
         // DrawRectangle(cop_x_two * CELL_SIZE, cop_y_two * CELL_SIZE, CELL_SIZE, CELL_SIZE, GREEN);
-
 
 
         if (caught) {
