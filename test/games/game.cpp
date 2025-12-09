@@ -110,7 +110,6 @@ void movement_generator() {
     }
 
     int dir = rand() % 5;
-    std::cout << "DIR: " << dir << std::endl;
     
     switch (dir) {
         case 0: { player_dx = 0; player_dy = -1; break;}
