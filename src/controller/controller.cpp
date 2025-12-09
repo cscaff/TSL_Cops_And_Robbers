@@ -4,6 +4,9 @@
 #include <string>
 #include <iostream>
 
+// Grid Size
+#define GRID_SIZE 7
+
 // Enviornment Inputs
 int cop_x = 0;
 int cop_y = 0;
@@ -26,26 +29,33 @@ void read_inputs() {
     while (!new_input_ready || (robber_x == cop_x && robber_y == cop_y)) {
         usleep(1000);
     }
-
-    // Apply the player input to robber position
-    robber_x += player_dx;
-    robber_y += player_dy;
-
+    
+    // Calculate new position
+    int new_robber_x = robber_x + player_dx;
+    int new_robber_y = robber_y + player_dy;
+    
+    // Apply boundary constraints before updating position
+    if (new_robber_x >= 0 && new_robber_x < GRID_SIZE) {
+        robber_x = new_robber_x;
+    }
+    if (new_robber_y >= 0 && new_robber_y < GRID_SIZE) {
+        robber_y = new_robber_y;
+    }
+    
     // Record Trace
     std::string curr_trace = std::string("{\"RobberX\":") + std::to_string(robber_x) +
-            ", \"RobberY\": " + std::to_string(robber_y) +
-            ", \"CopX\": " + std::to_string(cop_x) +
-            ", \"CopY\": " + std::to_string(cop_y) + "}\n";
-
+        ", \"RobberY\": " + std::to_string(robber_y) +
+        ", \"CopX\": " + std::to_string(cop_x) +
+        ", \"CopY\": " + std::to_string(cop_y) + "}\n";
     std::cout << curr_trace;
-
     trace += curr_trace;
-
+    
     // Reset flag
     player_dx = 0;
     player_dy = 0;
     new_input_ready = 0;
 }
+
 
 // System Controller
 void step_controller() {
