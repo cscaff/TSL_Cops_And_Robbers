@@ -47,7 +47,6 @@ void read_inputs() {
         ", \"RobberY\": " + std::to_string(robber_y) +
         ", \"CopX\": " + std::to_string(cop_x) +
         ", \"CopY\": " + std::to_string(cop_y) + "}\n";
-    std::cout << curr_trace;
     trace += curr_trace;
     
     // Reset flag
