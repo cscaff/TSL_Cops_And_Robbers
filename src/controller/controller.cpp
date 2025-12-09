@@ -23,7 +23,7 @@ std::string trace = "";
 
 void read_inputs() {
     // Wait until the game sets new input
-    while (!new_input_ready) {
+    while (!new_input_ready || (robber_x == cop_x && robber_y == cop_y)) {
         usleep(1000);
     }
 
@@ -32,12 +32,14 @@ void read_inputs() {
     robber_y += player_dy;
 
     // Record Trace
-    trace += std::string("{\"RobberX\":") + std::to_string(robber_x) +
+    std::string curr_trace = std::string("{\"RobberX\":") + std::to_string(robber_x) +
             ", \"RobberY\": " + std::to_string(robber_y) +
             ", \"CopX\": " + std::to_string(cop_x) +
             ", \"CopY\": " + std::to_string(cop_y) + "}\n";
 
-    std::cout << trace;
+    std::cout << curr_trace;
+
+    trace += curr_trace;
 
     // Reset flag
     player_dx = 0;
